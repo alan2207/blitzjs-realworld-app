@@ -34,12 +34,16 @@
     "@prisma/cli": "2.4.1",
     "@prisma/client": "2.4.1",
     "blitz": "0.17.0",
+    "dompurify": "2.0.12",
     "emotion-theming": "10.0.27",
     "lodash": "4.17.20",
+    "marked": "1.1.1",
     "react": "0.0.0-experimental-33c3af284",
     "react-dom": "0.0.0-experimental-33c3af284",
     "react-error-boundary": "2.3.1",
     "react-hook-form": "6.3.2",
+    "react-markdown-editor-lite": "1.2.2",
+    "react-select": "3.1.0",
     "secure-password": "4.0.0"
   },
   "devDependencies": {

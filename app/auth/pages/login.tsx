@@ -1,9 +1,10 @@
 import React from "react"
 import { useRouter, BlitzPage, Link } from "blitz"
 import login from "app/auth/mutations/login"
-import { Flex, Box, Heading } from "@chakra-ui/core"
+import { Flex, Box } from "@chakra-ui/core"
 import Form from "app/components/Form"
 import MainLayout from "app/layouts/MainLayout"
+import FormLayout from "app/layouts/FormLayout"
 
 const LoginPage: BlitzPage = () => {
   const router = useRouter()
@@ -26,10 +27,7 @@ const LoginPage: BlitzPage = () => {
   return (
     <MainLayout>
       <Flex justify="center" align="center" h="100%" w="100%">
-        <Box shadow="lg" bg="white" p="8" width="lg">
-          <Heading textAlign="center" mb="4">
-            Login
-          </Heading>
+        <FormLayout title="Login">
           <Form
             onSubmit={onSubmit}
             fields={{
@@ -50,7 +48,7 @@ const LoginPage: BlitzPage = () => {
           <Box py="4">
             <Link href="/register">Don't have an account? Go ahead and create one!</Link>
           </Box>
-        </Box>
+        </FormLayout>
       </Flex>
     </MainLayout>
   )
