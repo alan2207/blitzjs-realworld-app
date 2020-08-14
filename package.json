@@ -4,7 +4,8 @@
   "scripts": {
     "start": "blitz start",
     "studio": "blitz db studio",
-    "build": "blitz build",
+    "build": "NODE_ENV=production blitz db migrate && blitz build",
+    "start:prod": "next start",
     "lint": "eslint --ignore-path .gitignore --ext .js,.ts,.tsx .",
     "test": "echo \"No tests yet\""
   },
@@ -27,12 +28,19 @@
     ]
   },
   "dependencies": {
+    "@chakra-ui/core": "0.8.0",
+    "@emotion/core": "10.0.34",
+    "@emotion/styled": "10.0.27",
     "@prisma/cli": "2.4.1",
     "@prisma/client": "2.4.1",
     "blitz": "0.17.0",
+    "emotion-theming": "10.0.27",
+    "lodash": "4.17.20",
     "react": "0.0.0-experimental-33c3af284",
     "react-dom": "0.0.0-experimental-33c3af284",
-    "react-error-boundary": "2.3.1"
+    "react-error-boundary": "2.3.1",
+    "react-hook-form": "6.3.2",
+    "secure-password": "4.0.0"
   },
   "devDependencies": {
     "@types/react": "16.9.46",

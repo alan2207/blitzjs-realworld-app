@@ -1,6 +1,9 @@
 import { AppProps, ErrorComponent } from "blitz"
 import { ErrorBoundary } from "react-error-boundary"
 import { queryCache } from "react-query"
+import { CSSReset, ThemeProvider, Flex, Spinner } from "@chakra-ui/core"
+import { Suspense } from "react"
+import theme from "app/utils/theme"
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
@@ -12,7 +15,18 @@ export default function App({ Component, pageProps }: AppProps) {
         queryCache.resetErrorBoundaries()
       }}
     >
-      <Component {...pageProps} />
+      <ThemeProvider theme={theme}>
+        <CSSReset />
+        <Suspense
+          fallback={
+            <Flex h="100vh" w="100wv" justify="center" align="center">
+              <Spinner size="xl" />
+            </Flex>
+          }
+        >
+          <Component {...pageProps} />
+        </Suspense>
+      </ThemeProvider>
     </ErrorBoundary>
   )
 }
