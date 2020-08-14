@@ -47,6 +47,7 @@
     "secure-password": "4.0.0"
   },
   "devDependencies": {
+    "@hookform/devtools": "2.0.4",
     "@types/react": "16.9.46",
     "@typescript-eslint/eslint-plugin": "2.34.1-alpha.2",
     "@typescript-eslint/parser": "2.34.1-alpha.2",

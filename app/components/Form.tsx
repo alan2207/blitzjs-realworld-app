@@ -1,5 +1,6 @@
 import React from "react"
-import { useForm, ValidationRules } from "react-hook-form"
+import { useForm, ValidationRules, Controller } from "react-hook-form"
+import { DevTool } from "@hookform/devtools"
 import {
   Box,
   Input,
@@ -13,15 +14,7 @@ import ReactSelect from "react-select"
 import marked from "marked"
 import MdEditor from "app/components/MDEditor"
 type Field = {
-  type:
-    | "text"
-    | "number"
-    | "email"
-    | "password"
-    | "select"
-    | "textarea"
-    | "markdown"
-    | "multiselect"
+  type: "text" | "number" | "email" | "password" | "select" | "textarea" | "markdown" | "select"
   name: string
   label: string
   validation: ValidationRules
@@ -39,12 +32,17 @@ type Fields = {
   [key: string]: Field
 }
 
+type DefaultValues = {
+  [key: string]: any
+}
+
 type Props = {
   fields: Fields
   onSubmit: (any) => Promise<any>
+  defaultValues: DefaultValues
 }
 
-const Form = ({ fields, onSubmit }: Props) => {
+const Form = ({ fields, onSubmit, defaultValues }: Props) => {
   const {
     register,
     handleSubmit,
@@ -53,8 +51,8 @@ const Form = ({ fields, onSubmit }: Props) => {
     reset,
     setValue,
     errors,
-    getValues,
-  } = useForm()
+    control,
+  } = useForm({ defaultValues })
 
   const { isSubmitting } = formState
 
@@ -67,6 +65,7 @@ const Form = ({ fields, onSubmit }: Props) => {
     [setError, reset, setValue]
   )
 
+  console.log({ control })
   return (
     <Box
       onSubmit={handleSubmit(
@@ -99,15 +98,22 @@ const Form = ({ fields, onSubmit }: Props) => {
               />
             )}
             {v.type === "markdown" && (
-              <MdEditor
-                value={getValues([k])[0]}
-                onChange={({ text }) => setValue(k, text)}
-                renderHTML={(text) => marked(text)}
-                style={{ height: "300px" }}
+              <Controller
+                render={(props) => (
+                  <MdEditor
+                    {...props}
+                    onChange={({ text }) => setValue(k, text)}
+                    renderHTML={(text) => marked(text)}
+                    style={{ height: "300px" }}
+                  />
+                )}
+                name={k}
+                control={control}
               />
             )}
-            {v.type === "multiselect" && v.selectParams && (
-              <ReactSelect
+            {v.type === "select" && v.selectParams && (
+              <Controller
+                as={<ReactSelect />}
                 isClearable={false}
                 getOptionValue={(t) => t[v.selectParams?.optionValueKey || ""]}
                 getOptionLabel={(t) => t[v.selectParams?.optionLabelKey || ""]}
@@ -115,6 +121,7 @@ const Form = ({ fields, onSubmit }: Props) => {
                 isMulti={v.selectParams.isMulti}
                 options={v.options}
                 name={k}
+                control={control}
               />
             )}
             <FormHelperText textTransform="capitalize" color="red.300">
@@ -134,6 +141,7 @@ const Form = ({ fields, onSubmit }: Props) => {
       >
         Submit
       </Button>
+      <DevTool control={control} />
     </Box>
   )
 }

@@ -1256,7 +1256,7 @@
     "@emotion/utils" "0.11.3"
     "@emotion/weak-memoize" "0.2.5"
 
-"@emotion/core@10.0.34", "@emotion/core@^10.0.9":
+"@emotion/core@10.0.34", "@emotion/core@^10.0.28", "@emotion/core@^10.0.9":
   version "10.0.34"
   resolved "https://registry.yarnpkg.com/@emotion/core/-/core-10.0.34.tgz#a643889dc32bdde829482539c9438a026631187c"
   integrity sha512-Kcs8WHZG1NgaVFQsSpgN07G0xpfPAKUclwKvUqKrYrJovezl9uTz++1M4JfXHrgFVEiJ5QO46hMo1ZDDfvY/tw==
@@ -1320,7 +1320,7 @@
     "@emotion/serialize" "^0.11.15"
     "@emotion/utils" "0.11.3"
 
-"@emotion/styled@10.0.27":
+"@emotion/styled@10.0.27", "@emotion/styled@^10.0.27":
   version "10.0.27"
   resolved "https://registry.yarnpkg.com/@emotion/styled/-/styled-10.0.27.tgz#12cb67e91f7ad7431e1875b1d83a94b814133eaf"
   integrity sha512-iK/8Sh7+NLJzyp9a5+vIQIXTYxfT4yB/OJbjzQanB2RZpvmzBQOHZWhpAMZWYEKRNNbsD6WfBw5sVWkb6WzS/Q==
@@ -1347,6 +1347,18 @@
   version "0.2.5"
   resolved "https://registry.yarnpkg.com/@emotion/weak-memoize/-/weak-memoize-0.2.5.tgz#8eed982e2ee6f7f4e44c253e12962980791efd46"
   integrity sha512-6U71C2Wp7r5XtFtQzYrW5iKFT67OixrSxjI4MptCHzdSVlgabczzqLe0ZSgnub/5Kp4hSbpDB1tMytZY9pwxxA==
+
+"@hookform/devtools@2.0.4":
+  version "2.0.4"
+  resolved "https://registry.yarnpkg.com/@hookform/devtools/-/devtools-2.0.4.tgz#f4291d10af76fb6b3de6b2455a1a20764e1cfa57"
+  integrity sha512-+qP6U21Lxuuxc3BTqdB0XQlngckC2KAF5Eq82Ox0Fx/SWzCdYqpJ00siGZkdfZ0bIiUHeR7/gI8tS6rRTXHsfQ==
+  dependencies:
+    "@emotion/core" "^10.0.28"
+    "@emotion/styled" "^10.0.27"
+    "@types/lodash" "^4.14.152"
+    little-state-machine "^3.0.1"
+    lodash "^4.17.15"
+    react-simple-animate "^3.3.8"
 
 "@mrmlnc/readdir-enhanced@^2.2.1":
   version "2.2.1"
@@ -1736,6 +1748,11 @@
   integrity sha512-MPtoySlAZQ37VoLaPcTHCu1RWJ4llDkULYZIzOYxlhxBqYPB0RsRlmMU0R6tahtFe27mIdkHV+551ZWV4PLmVw==
   dependencies:
     "@types/node" "*"
+
+"@types/lodash@^4.14.152":
+  version "4.14.159"
+  resolved "https://registry.yarnpkg.com/@types/lodash/-/lodash-4.14.159.tgz#61089719dc6fdd9c5cb46efc827f2571d1517065"
+  integrity sha512-gF7A72f7WQN33DpqOWw9geApQPh4M3PxluMtaHxWHXEGSN12/WbcEk/eNSqWNQcQhF66VSZ06vCF94CrHwXJDg==
 
 "@types/minimatch@*", "@types/minimatch@^3.0.3":
   version "3.0.3"
@@ -5850,6 +5867,11 @@ listr2@^2.1.0:
     rxjs "^6.6.2"
     through "^2.3.8"
 
+little-state-machine@^3.0.1:
+  version "3.1.1"
+  resolved "https://registry.yarnpkg.com/little-state-machine/-/little-state-machine-3.1.1.tgz#c4076a93017d7ffe737d07c233a8164dc54ed9e6"
+  integrity sha512-+WRvpzdgNfBRo03hC74UNuMdtDEPJlpzQAQDAn10pIHoa2ksjUvvRaz+acoePHcDAjaPJ25ZdC0iNA+ECEI9XQ==
+
 load-json-file@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/load-json-file/-/load-json-file-2.0.0.tgz#7947e42149af80d696cbf797bcaabcfe1fe29ca8"
@@ -7818,6 +7840,11 @@ react-select@3.1.0:
     prop-types "^15.6.0"
     react-input-autosize "^2.2.2"
     react-transition-group "^4.3.0"
+
+react-simple-animate@^3.3.8:
+  version "3.3.9"
+  resolved "https://registry.yarnpkg.com/react-simple-animate/-/react-simple-animate-3.3.9.tgz#5ec5f475321ab1ff1db9ffb8d51276fe3f740438"
+  integrity sha512-ADzN2NT5jD0G2Rwdw8jSTPLlKvtX2QyqW2MTUmQhh8dTBxKP39/kSjju6uVLUlYIMk93JyGpJDulsZ/p1Z9fDQ==
 
 react-spring@^8.0.27:
   version "8.0.27"
