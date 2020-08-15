@@ -7,11 +7,11 @@ type GetPostsInput = {
   take?: FindManyPostArgs["take"]
   skip?: FindManyPostArgs["skip"]
   // Only available if a model relationship exists
-  // include?: FindManyPostArgs['include']
+  include?: FindManyPostArgs["include"]
 }
 
 export default async function getPosts(
-  { where, orderBy, cursor, take, skip }: GetPostsInput,
+  { where, orderBy, cursor, take, skip, include }: GetPostsInput,
   ctx: Record<any, any> = {}
 ) {
   const posts = await db.post.findMany({
@@ -20,6 +20,7 @@ export default async function getPosts(
     cursor,
     take,
     skip,
+    include,
   })
 
   return posts

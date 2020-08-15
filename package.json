@@ -34,6 +34,7 @@
     "@prisma/cli": "2.4.1",
     "@prisma/client": "2.4.1",
     "blitz": "0.17.0",
+    "date-fns": "2.15.0",
     "dompurify": "2.0.12",
     "emotion-theming": "10.0.27",
     "lodash": "4.17.20",

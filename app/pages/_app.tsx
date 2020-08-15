@@ -3,7 +3,7 @@ import { ErrorBoundary } from "react-error-boundary"
 import { queryCache } from "react-query"
 import { CSSReset, ThemeProvider, Flex, Spinner } from "@chakra-ui/core"
 import { Suspense } from "react"
-import theme from "app/utils/theme"
+import theme from "app/styles/theme"
 import "react-markdown-editor-lite/lib/index.css"
 
 export default function App({ Component, pageProps }: AppProps) {

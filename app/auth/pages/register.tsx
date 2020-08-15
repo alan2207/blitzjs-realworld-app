@@ -10,7 +10,7 @@ const RegisterPage: BlitzPage = () => {
   const router = useRouter()
   const onSubmit = async ({ values, formControls }) => {
     try {
-      await register({ email: values.email, password: values.password })
+      await register(values)
       router.push("/")
     } catch (error) {
       if (error.code === "P2002" && error.meta?.target?.includes("email")) {
@@ -30,7 +30,14 @@ const RegisterPage: BlitzPage = () => {
         <FormLayout title="Register">
           <Form
             onSubmit={onSubmit}
+            defaultValues={{}}
             fields={{
+              name: {
+                name: "name",
+                label: "Name",
+                type: "text",
+                validation: { required: true },
+              },
               email: {
                 name: "email",
                 label: "Email",

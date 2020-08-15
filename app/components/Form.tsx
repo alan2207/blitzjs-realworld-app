@@ -9,6 +9,7 @@ import {
   FormLabel,
   FormHelperText,
   Textarea,
+  useToast,
 } from "@chakra-ui/core"
 import ReactSelect from "react-select"
 import marked from "marked"
@@ -20,7 +21,7 @@ type Field = {
   validation: ValidationRules
   isDisabled?: boolean
   placeholder?: string
-  options?: Array<{ value: any; label: string }>
+  options?: Array<{ [key: string]: any }>
   selectParams?: {
     optionValueKey: string
     optionLabelKey: string
@@ -43,6 +44,7 @@ type Props = {
 }
 
 const Form = ({ fields, onSubmit, defaultValues }: Props) => {
+  const toast = useToast()
   const {
     register,
     handleSubmit,
@@ -65,12 +67,22 @@ const Form = ({ fields, onSubmit, defaultValues }: Props) => {
     [setError, reset, setValue]
   )
 
-  console.log({ control })
   return (
     <Box
-      onSubmit={handleSubmit(
-        async (values, event) => await onSubmit({ values, formControls, event })
-      )}
+      onSubmit={handleSubmit(async (values, event) => {
+        try {
+          await onSubmit({ values, formControls, event })
+        } catch (err) {
+          toast({
+            title: "Error",
+            description: err?.message,
+            status: "error",
+            duration: 5000,
+            isClosable: true,
+            position: "top",
+          })
+        }
+      })}
       as="form"
       w="100%"
     >

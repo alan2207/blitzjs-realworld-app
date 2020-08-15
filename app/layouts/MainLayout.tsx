@@ -1,5 +1,5 @@
 import React from "react"
-import { Head, Link } from "blitz"
+import { Head, Link, Router } from "blitz"
 import {
   Flex,
   Box,
@@ -39,7 +39,7 @@ const MainLayout = ({ children }) => {
                   <MenuList color="black">
                     <MenuGroup title={user.email}>
                       <MenuItem>
-                        <Link href="/profile">New Post</Link>
+                        <Link href="/posts/create">New Post</Link>
                       </MenuItem>
                       <MenuItem>
                         <Link href="/profile">View Profile</Link>
@@ -47,7 +47,14 @@ const MainLayout = ({ children }) => {
                       <MenuItem>
                         <Link href="/settings">Settings</Link>
                       </MenuItem>
-                      <MenuItem onClick={() => logout()}>Log Out</MenuItem>
+                      <MenuItem
+                        onClick={async () => {
+                          await logout()
+                          Router.replace("/")
+                        }}
+                      >
+                        Log Out
+                      </MenuItem>
                     </MenuGroup>
                   </MenuList>
                 </Menu>
