@@ -1,5 +1,5 @@
 import React from "react"
-import { useQuery, Router } from "blitz"
+import { useQuery, Router, Head } from "blitz"
 import getTags from "app/tags/queries/getTags"
 import MainLayout from "app/layouts/MainLayout"
 import FormLayout from "app/layouts/FormLayout"
@@ -15,6 +15,10 @@ const CreatePostPage = () => {
 
   return (
     <MainLayout>
+      <Head>
+        <title>New Post</title>
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
       <Flex my="60px" justify="center" align="center" h="100%" w="100%">
         <FormLayout title="Create Post">
           <Form

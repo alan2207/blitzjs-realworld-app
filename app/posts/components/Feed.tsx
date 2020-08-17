@@ -1,30 +1,47 @@
 import React from "react"
-import { Box, Flex, Tag, Heading, Stack, Text } from "@chakra-ui/core"
-import { useQuery, Link } from "blitz"
+import {
+  Box,
+  Flex,
+  Tag,
+  Heading,
+  Stack,
+  Tabs,
+  TabList,
+  TabPanels,
+  Tab,
+  TabPanel,
+  Button,
+} from "@chakra-ui/core"
+import { useQuery, usePaginatedQuery } from "blitz"
 import getTags from "app/tags/queries/getTags"
 import { cardStyles } from "app/styles"
 import getPosts from "../queries/getPosts"
+import PostList from "../components/PostList"
 
-const Post = ({ post }) => {
-  return (
-    <Flex flexDir="column" {...cardStyles} my="2">
-      <Text>{post.User?.name}</Text>
-      <Text mb="2" color="gray.500" fontSize="xs">
-        {post.createdAt}
-      </Text>
-      <Heading size="lg">{post.title}</Heading>
-      <Text my="1" mb="4">
-        {post.intro}
-      </Text>
-      <Link href={`/posts/${post.id}`}>Read More</Link>
-    </Flex>
-  )
-}
+const ITEMS_PER_PAGE = 5
+
 const Feed = () => {
+  const [page, setPage] = React.useState(0)
+  const [feedQuery, setFeedQuery] = React.useState({})
   const [selectedTag, setSelectedTag] = React.useState("")
+  const [tabIndex, setTabIndex] = React.useState(0)
   const [tags] = useQuery(getTags, {})
-  const query = selectedTag
-    ? {
+  React.useEffect(() => {
+    if (selectedTag) {
+      setTabIndex(2)
+    } else {
+      setTabIndex(0)
+    }
+  }, [selectedTag])
+
+  React.useEffect(() => {
+    setPage(0)
+    if (tabIndex === 0) {
+      setFeedQuery({})
+    } else if (tabIndex === 1) {
+      setFeedQuery({})
+    } else if (tabIndex === 2) {
+      setFeedQuery({
         tags: {
           some: {
             name: {
@@ -32,11 +49,15 @@ const Feed = () => {
             },
           },
         },
-      }
-    : {}
-  console.log({ query })
-  const [posts] = useQuery(getPosts, {
-    where: query,
+      })
+    }
+  }, [tabIndex, selectedTag])
+
+  console.log({ feedQuery })
+  const [{ posts, hasMore }] = usePaginatedQuery(getPosts, {
+    where: feedQuery,
+    skip: ITEMS_PER_PAGE * page,
+    take: ITEMS_PER_PAGE,
     include: {
       User: true,
     },
@@ -45,9 +66,24 @@ const Feed = () => {
   return (
     <Stack spacing="4" isInline w="100%">
       <Box w="70%">
-        {posts.map((p) => (
-          <Post post={p} />
-        ))}
+        <Tabs onChange={setTabIndex} index={tabIndex}>
+          <TabList>
+            <Tab>Global Feed</Tab>
+            <Tab>Personal Feed</Tab>
+            {selectedTag && <Tab>{selectedTag} Feed</Tab>}
+          </TabList>
+
+          <PostList posts={posts} />
+          <Flex align="center" justify="space-between">
+            <Button isDisabled={page === 0} onClick={() => setPage((p) => p - 1)}>
+              Previous
+            </Button>
+            <Box>Page {page + 1}</Box>
+            <Button isDisabled={!hasMore} onClick={() => setPage((p) => p + 1)}>
+              Next
+            </Button>
+          </Flex>
+        </Tabs>
       </Box>
       <Box w="30%">
         <Box {...cardStyles} p="3" my="2">

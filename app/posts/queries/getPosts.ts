@@ -23,5 +23,8 @@ export default async function getPosts(
     include,
   })
 
-  return posts
+  const count = await db.post.count({ where })
+  const hasMore = skip! + take! < count
+
+  return { posts, hasMore }
 }

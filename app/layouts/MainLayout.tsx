@@ -71,12 +71,12 @@ const MainLayout = ({ children }) => {
             </Flex>
           </Flex>
         </Box>
-        <Box bg="bg-light" color="text-dark" h="calc(100vh - 120px)" overflowY="auto" as="main">
+        <Box bg="bg-light" color="text-dark" h="calc(100vh - 60px)" overflowY="auto" as="main">
           <Box h="100%" marginX="auto">
             {children}
           </Box>
         </Box>
-        <Flex justify="center" align="center" bg="bg-dark" color="text-light" h="60px" as="footer">
+        {/* <Flex justify="center" align="center" bg="bg-dark" color="text-light" h="60px" as="footer">
           <a
             href="https://blitzjs.com?utm_source=blitz-new&utm_medium=app-template&utm_campaign=blitz-new"
             target="_blank"
@@ -84,7 +84,7 @@ const MainLayout = ({ children }) => {
           >
             Powered by Blitz.js
           </a>
-        </Flex>
+        </Flex> */}
       </Flex>
     </>
   )
