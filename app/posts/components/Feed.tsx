@@ -54,12 +54,13 @@ const Feed = () => {
   }, [tabIndex, selectedTag])
 
   console.log({ feedQuery })
-  const [{ posts, hasMore }] = usePaginatedQuery(getPosts, {
+  const [{ posts, hasMore }, { refetch }] = usePaginatedQuery(getPosts, {
     where: feedQuery,
     skip: ITEMS_PER_PAGE * page,
     take: ITEMS_PER_PAGE,
     include: {
       User: true,
+      favoritedBy: true,
     },
   })
   console.log(selectedTag)
@@ -73,7 +74,7 @@ const Feed = () => {
             {selectedTag && <Tab>{selectedTag} Feed</Tab>}
           </TabList>
 
-          <PostList posts={posts} />
+          <PostList refetch={refetch} posts={posts} />
           <Flex align="center" justify="space-between">
             <Button isDisabled={page === 0} onClick={() => setPage((p) => p - 1)}>
               Previous

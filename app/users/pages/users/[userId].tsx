@@ -16,12 +16,13 @@ const ShowUserPage: BlitzPage = () => {
     include: {
       followedBy: true,
       following: true,
+      favorites: true,
     },
   })
 
   const isAlreadyFollowing = !!user?.followedBy?.find((f) => f.id == session?.userId)
 
-  const handleFollow = async () => {
+  const toggleFollow = async () => {
     const operation = isAlreadyFollowing ? "disconnect" : "connect"
     if (!session.userId) return
     try {
@@ -56,7 +57,7 @@ const ShowUserPage: BlitzPage = () => {
                 Settings
               </Button>
             ) : (
-              <Button onClick={handleFollow} my="4" variant="outline" variantColor="primary">
+              <Button onClick={toggleFollow} my="4" variant="outline" variantColor="primary">
                 {isAlreadyFollowing ? "Unfollow" : "Follow"}
               </Button>
             )}
