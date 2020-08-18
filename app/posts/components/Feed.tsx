@@ -1,9 +1,8 @@
 import React from "react"
-import { Box, Flex, Stack, Tabs, TabList, Tab, Button } from "@chakra-ui/core"
-import { usePaginatedQuery, useSession, useQuery } from "blitz"
+import { Box, Flex, Stack, Tabs, TabList, Tab, Button, Heading } from "@chakra-ui/core"
+import { usePaginatedQuery, useSession } from "blitz"
 import getPosts from "../queries/getPosts"
 import PostList from "../components/PostList"
-import getTag from "app/tags/queries/getTag"
 
 const ITEMS_PER_PAGE = 5
 
@@ -54,9 +53,9 @@ const Feed = ({ tagName = "" }) => {
     },
   })
 
-  const [tagDetails] = useQuery(getTag, { where: { name: tagName } }, { enabled: !!tagName })
   return (
-    <Stack spacing="4" isInline w="100%">
+    <Stack spacing="4" w="100%">
+      {tagName && <Heading># {tagName}</Heading>}
       <Box w="100%">
         <Tabs onChange={setTabIndex} index={tabIndex}>
           <TabList>
