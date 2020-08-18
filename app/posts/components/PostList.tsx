@@ -6,7 +6,7 @@ import { cardStyles } from "app/styles"
 const Post = ({ post }) => {
   return (
     <Flex flexDir="column" {...cardStyles} my="2">
-      <Text>{post.User?.name}</Text>
+      <Link href={`/users/${post.userId}`}>{post.User?.name || "User"}</Link>
       <Text mb="2" color="gray.500" fontSize="xs">
         {post.createdAt}
       </Text>
