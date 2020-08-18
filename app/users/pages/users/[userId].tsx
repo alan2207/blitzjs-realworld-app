@@ -2,21 +2,47 @@ import React from "react"
 import { Head, useRouter, useQuery, useParam, BlitzPage, useSession } from "blitz"
 import getUser from "app/users/queries/getUser"
 import MainLayout from "app/layouts/MainLayout"
-import { Box, Flex, Heading, Avatar, Button } from "@chakra-ui/core"
+import {
+  Box,
+  Flex,
+  Heading,
+  Avatar,
+  Button,
+  Tabs,
+  TabList,
+  TabPanels,
+  Tab,
+  TabPanel,
+} from "@chakra-ui/core"
 import updateUser from "app/users/mutations/updateUser"
+import PostList from "app/posts/components/PostList"
+import UserList from "app/users/components/UserList"
 
 const ShowUserPage: BlitzPage = () => {
   const router = useRouter()
   const session = useSession()
   const userId = useParam("userId", "number")
-  const [user, { mutate }] = useQuery(getUser, {
+  const [user, { mutate, refetch }] = useQuery(getUser, {
     where: {
       id: userId,
     },
     include: {
       followedBy: true,
       following: true,
-      favorites: true,
+      favorites: {
+        include: {
+          favoritedBy: true,
+          User: true,
+          tags: true,
+        },
+      },
+      posts: {
+        include: {
+          favoritedBy: true,
+          User: true,
+          tags: true,
+        },
+      },
     },
   })
 
@@ -63,7 +89,29 @@ const ShowUserPage: BlitzPage = () => {
             )}
           </Box>
         </Flex>
-        <pre>{JSON.stringify(user, null, 2)}</pre>
+        <Tabs mt="4" maxW="containers.lg" mx="auto">
+          <TabList>
+            <Tab>Articles</Tab>
+            <Tab>Favorites</Tab>
+            <Tab>Followers</Tab>
+            <Tab>Following</Tab>
+          </TabList>
+
+          <TabPanels>
+            <TabPanel>
+              <PostList posts={user.posts} refetch={refetch} />
+            </TabPanel>
+            <TabPanel>
+              <PostList posts={user.favorites} refetch={refetch} />
+            </TabPanel>
+            <TabPanel>
+              <UserList users={user.followedBy} />
+            </TabPanel>
+            <TabPanel>
+              <UserList users={user.following} />
+            </TabPanel>
+          </TabPanels>
+        </Tabs>
       </Box>
     </MainLayout>
   )

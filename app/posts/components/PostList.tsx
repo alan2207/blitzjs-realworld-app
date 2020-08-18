@@ -3,6 +3,7 @@ import { Box, Flex, Heading, Text, Button, Icon } from "@chakra-ui/core"
 import { Link, useSession } from "blitz"
 import { cardStyles } from "app/styles"
 import updatePost from "../mutations/updatePost"
+import EmptyList from "app/components/EmptyList"
 
 const Post = ({ post, refetch }) => {
   const session = useSession()
@@ -35,6 +36,7 @@ const Post = ({ post, refetch }) => {
     : { bg: "gray.200", color: "white" }
 
   const favoriteCount = post?.favoritedBy?.length
+
   return (
     <Flex flexDir="column" {...cardStyles} my="2">
       <Link href={`/users/${post.userId}`}>{post.User?.name || "User"}</Link>
@@ -45,7 +47,16 @@ const Post = ({ post, refetch }) => {
       <Text my="1" mb="4">
         {post.intro}
       </Text>
-      <Flex justify="space-between" align="center">
+      <Flex my="1">
+        {post.tags.map((t) => (
+          <Link href={`/tags/${t.name}`}>
+            <Button mr="2" size="sm">
+              #{t.name}
+            </Button>
+          </Link>
+        ))}
+      </Flex>
+      <Flex justify="space-between" align="flex-end">
         <Link href={`/posts/${post.id}`}>Read More</Link>{" "}
         <Button variant="outline" onClick={toggleFavorite} {...toggleButtonStyles}>
           <Icon mr="2" name="star" />
@@ -57,6 +68,9 @@ const Post = ({ post, refetch }) => {
 }
 
 const PostList = ({ posts, refetch }) => {
+  if (!posts?.length) {
+    return <EmptyList />
+  }
   return (
     <Box w="100%">
       {posts.map((p) => (

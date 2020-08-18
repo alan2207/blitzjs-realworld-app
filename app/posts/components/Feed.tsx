@@ -1,59 +1,48 @@
 import React from "react"
-import {
-  Box,
-  Flex,
-  Tag,
-  Heading,
-  Stack,
-  Tabs,
-  TabList,
-  TabPanels,
-  Tab,
-  TabPanel,
-  Button,
-} from "@chakra-ui/core"
-import { useQuery, usePaginatedQuery } from "blitz"
-import getTags from "app/tags/queries/getTags"
-import { cardStyles } from "app/styles"
+import { Box, Flex, Stack, Tabs, TabList, Tab, Button } from "@chakra-ui/core"
+import { usePaginatedQuery, useSession, useQuery } from "blitz"
 import getPosts from "../queries/getPosts"
 import PostList from "../components/PostList"
+import getTag from "app/tags/queries/getTag"
 
 const ITEMS_PER_PAGE = 5
 
-const Feed = () => {
+const Feed = ({ tagName = "" }) => {
+  const session = useSession()
   const [page, setPage] = React.useState(0)
   const [feedQuery, setFeedQuery] = React.useState({})
-  const [selectedTag, setSelectedTag] = React.useState("")
   const [tabIndex, setTabIndex] = React.useState(0)
-  const [tags] = useQuery(getTags, {})
-  React.useEffect(() => {
-    if (selectedTag) {
-      setTabIndex(2)
-    } else {
-      setTabIndex(0)
-    }
-  }, [selectedTag])
 
   React.useEffect(() => {
-    setPage(0)
+    const tagQuery = tagName
+      ? {
+          tags: {
+            some: {
+              name: {
+                contains: tagName,
+              },
+            },
+          },
+        }
+      : {}
     if (tabIndex === 0) {
-      setFeedQuery({})
+      setFeedQuery({ ...tagQuery })
     } else if (tabIndex === 1) {
-      setFeedQuery({})
-    } else if (tabIndex === 2) {
       setFeedQuery({
-        tags: {
-          some: {
-            name: {
-              contains: selectedTag,
+        User: {
+          followedBy: {
+            some: {
+              id: {
+                equals: session.userId,
+              },
             },
           },
         },
+        ...tagQuery,
       })
     }
-  }, [tabIndex, selectedTag])
+  }, [tabIndex, session.userId, tagName])
 
-  console.log({ feedQuery })
   const [{ posts, hasMore }, { refetch }] = usePaginatedQuery(getPosts, {
     where: feedQuery,
     skip: ITEMS_PER_PAGE * page,
@@ -61,17 +50,18 @@ const Feed = () => {
     include: {
       User: true,
       favoritedBy: true,
+      tags: true,
     },
   })
-  console.log(selectedTag)
+
+  const [tagDetails] = useQuery(getTag, { where: { name: tagName } }, { enabled: !!tagName })
   return (
     <Stack spacing="4" isInline w="100%">
-      <Box w="70%">
+      <Box w="100%">
         <Tabs onChange={setTabIndex} index={tabIndex}>
           <TabList>
             <Tab>Global Feed</Tab>
             <Tab>Personal Feed</Tab>
-            {selectedTag && <Tab>{selectedTag} Feed</Tab>}
           </TabList>
 
           <PostList refetch={refetch} posts={posts} />
@@ -85,25 +75,6 @@ const Feed = () => {
             </Button>
           </Flex>
         </Tabs>
-      </Box>
-      <Box w="30%">
-        <Box {...cardStyles} p="3" my="2">
-          <Heading my="4" size="md">
-            Tags
-          </Heading>
-          <Flex w="100%" flexWrap="wrap">
-            {tags.map((t) => (
-              <Tag
-                onClick={() => setSelectedTag(selectedTag === t.name ? "" : t.name)}
-                m="1"
-                bg={selectedTag === t.name ? "bg-light" : "bg-dark"}
-                color={selectedTag === t.name ? "text-dark" : "text-light"}
-              >
-                {t.name}
-              </Tag>
-            ))}
-          </Flex>
-        </Box>
       </Box>
     </Stack>
   )
