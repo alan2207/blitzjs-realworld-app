@@ -4,6 +4,7 @@
   "scripts": {
     "start": "blitz start",
     "studio": "blitz db studio",
+    "db:seed": "ts-node db/seeds.js",
     "build": "NODE_ENV=production blitz db migrate && blitz build",
     "start:prod": "next start",
     "lint": "eslint --ignore-path .gitignore --ext .js,.ts,.tsx .",
