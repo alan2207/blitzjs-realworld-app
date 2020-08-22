@@ -56,7 +56,7 @@ const MainLayout = ({ children, headTitle = "Real World App" }) => {
                           </Link>
                         </MenuItem>
                         <MenuItem py="4">
-                          <Link href="/settings">
+                          <Link href="/users/settings">
                             <Box>
                               <Icon mr="2" name="settings" />
                               Settings

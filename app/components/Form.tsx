@@ -40,7 +40,7 @@ type DefaultValues = {
 type Props = {
   fields: Fields
   onSubmit: (any) => Promise<any>
-  defaultValues: DefaultValues
+  defaultValues?: DefaultValues
 }
 
 const Form = ({ fields, onSubmit, defaultValues }: Props) => {

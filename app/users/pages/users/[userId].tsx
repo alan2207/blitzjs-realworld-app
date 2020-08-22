@@ -75,7 +75,12 @@ const ShowUserPage: BlitzPage = () => {
             <Avatar size="xl" />
             <Heading textAlign="center">{user.name}</Heading>
             {session?.userId === userId ? (
-              <Button my="4" variant="outline" variantColor="primary">
+              <Button
+                onClick={() => router.push("/users/settings")}
+                my="4"
+                variant="outline"
+                variantColor="primary"
+              >
                 Settings
               </Button>
             ) : (

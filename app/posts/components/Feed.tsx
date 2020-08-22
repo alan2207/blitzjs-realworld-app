@@ -90,7 +90,7 @@ const Feed = ({ tagName = "" }) => {
         </Tabs>
       </Box>
       <Box w="20%">
-        <Heading mb="4" size="md">
+        <Heading mt="16" mb="4" size="md">
           Tags:
         </Heading>
         <Flex flexDir="column">
