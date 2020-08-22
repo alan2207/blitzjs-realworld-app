@@ -1,19 +1,16 @@
 import React from "react"
-import { useQuery, Router, Head, useSession, useRouter, ErrorComponent } from "blitz"
+import { useQuery, Router, useSession, useRouter, ErrorComponent } from "blitz"
 import getTags from "app/tags/queries/getTags"
 import MainLayout from "app/layouts/MainLayout"
 import FormLayout from "app/layouts/FormLayout"
 import Form from "app/components/Form"
-import { Flex, Box } from "@chakra-ui/core"
+import { Flex } from "@chakra-ui/core"
 import differenceBy from "lodash/differenceBy"
 import updatePost from "app/posts/mutations/updatePost"
-import useAuthUser from "app/auth/hooks/useAuthUser"
-import allowAuthorizedRoles from "app/utils/allowAuthorizedRoles"
 import getPost from "app/posts/queries/getPost"
 import FullPageSpinner from "app/components/FullPageSpinner"
 
 const EditPostPage = () => {
-  const [authUser] = useAuthUser()
   const session = useSession()
   const router = useRouter()
   const [post, { isFetching }] = useQuery(
@@ -48,6 +45,8 @@ const EditPostPage = () => {
         <FormLayout title="Edit Post">
           <Form
             onSubmit={async ({ values: { tags, ...values } }) => {
+              const removingTags = differenceBy(post.tags, tags).map((t) => ({ id: t.id }))
+              const addingTags = differenceBy(tags, post.tags).map((t) => ({ id: t.id }))
               await updatePost({
                 where: {
                   id: +router.params.id,
@@ -55,8 +54,8 @@ const EditPostPage = () => {
                 data: {
                   ...values,
                   tags: {
-                    connect: tags?.map((t) => ({ id: t.id })),
-                    disconnect: differenceBy(post.tags, tags).map((t) => ({ id: t.id })),
+                    connect: addingTags.length > 0 ? addingTags : undefined,
+                    disconnect: removingTags.length > 0 ? removingTags : undefined,
                   },
                 },
               })
