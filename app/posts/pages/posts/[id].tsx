@@ -4,7 +4,6 @@ import {
   ssrQuery,
   GetServerSideProps,
   PromiseReturnType,
-  Head,
   useQuery,
   useRouter,
   useSession,
@@ -60,27 +59,30 @@ const PostPage = ({ postData }) => {
   )
 
   return (
-    <MainLayout>
-      <Head>
-        <title>{post.title}</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-      <Box {...cardStyles} maxW="containers.lg" minH="80vh" mx="auto" my="4" p="4">
+    <MainLayout headTitle={post.title}>
+      <Box {...cardStyles} maxW="containers.lg" mx="auto" my="4" p="4">
         <Heading textAlign="center">{post.title}</Heading>
-        <Flex>
-          <Box p="8">
+
+        <Flex justify="space-between" align="center" p="8">
+          <Box>
             <Text>Created By: {post.User?.name}</Text>
             <Text>Date: {post.createdAt}</Text>
           </Box>
+
+          {session.userId === post.userId && (
+            <Button onClick={() => router.push(`/posts/${router.params.id}/edit`)}>Edit</Button>
+          )}
         </Flex>
         <MarkdownPreview content={post.content} />
       </Box>
 
       <Box {...cardStyles} maxW="containers.lg" mx="auto" my="4" p="8">
         <Heading>Comments</Heading>
-        <Button my="4" bg="bg-dark" color="text-light" onClick={onOpen}>
-          Write Comment
-        </Button>
+        {session.userId && (
+          <Button my="4" bg="bg-dark" color="text-light" onClick={onOpen}>
+            Write Comment
+          </Button>
+        )}
         <Modal
           isOpen={isOpen}
           onClose={() => {
@@ -130,7 +132,7 @@ const PostPage = ({ postData }) => {
         </Modal>
 
         {post.comments.map((c) => (
-          <Box p="4" bg="gray.100" my="4">
+          <Box key={c.id} p="4" bg="gray.100" my="4" borderRadius="md">
             <Box>
               <Link href={`/users/${c.user.id}`}>{c.user.name || ""}</Link>
               <Text mb="2" color="gray.500" fontSize="xs">

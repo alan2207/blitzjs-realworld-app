@@ -11,6 +11,7 @@ const EmptyList = () => {
       justify="center"
       align="center"
       height="300px"
+      borderRadius="md"
     >
       <Icon name="not-allowed" size="3em" />
       <Text>No Items Found</Text>

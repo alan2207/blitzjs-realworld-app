@@ -7,8 +7,6 @@ import EmptyList from "app/components/EmptyList"
 
 const Post = ({ post, refetch }) => {
   const session = useSession()
-  console.log("asdlasjdlasjkd")
-  console.log({ post })
   const isAlreadyFavoriting = !!post?.favoritedBy?.find((f) => f.id == session?.userId)
 
   const toggleFavorite = async () => {
