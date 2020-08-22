@@ -1,5 +1,5 @@
 import React from "react"
-import { Head, Link, Router } from "blitz"
+import { Head, Link, Router, useRouter } from "blitz"
 import {
   Flex,
   Box,
@@ -11,12 +11,14 @@ import {
   AvatarBadge,
   Avatar,
   Button,
+  Icon,
 } from "@chakra-ui/core"
 import useAuthUser from "app/auth/hooks/useAuthUser"
 import logout from "app/auth/mutations/logout"
 
 const MainLayout = ({ children, headTitle = "Real World App" }) => {
   const [user] = useAuthUser()
+  const router = useRouter()
 
   return (
     <>
@@ -30,34 +32,53 @@ const MainLayout = ({ children, headTitle = "Real World App" }) => {
             <Link href="/">Home</Link>
             <Flex justify="space-between">
               {user ? (
-                <Menu>
-                  <MenuButton outline="none" as={Button} bg="primary">
-                    <Avatar size="xs">
-                      <AvatarBadge bg="green.500" />
-                    </Avatar>
-                  </MenuButton>
-                  <MenuList color="black">
-                    <MenuGroup title={user.email}>
-                      <MenuItem>
-                        <Link href="/posts/create">New Post</Link>
-                      </MenuItem>
-                      <MenuItem>
-                        <Link href="/profile">View Profile</Link>
-                      </MenuItem>
-                      <MenuItem>
-                        <Link href="/settings">Settings</Link>
-                      </MenuItem>
-                      <MenuItem
-                        onClick={async () => {
-                          await logout()
-                          Router.replace("/login")
-                        }}
-                      >
-                        Log Out
-                      </MenuItem>
-                    </MenuGroup>
-                  </MenuList>
-                </Menu>
+                <>
+                  <Button onClick={() => router.push("/posts/create")} mr="4" color="text-dark">
+                    <Icon mr="2" name="add" />
+                    Create Post
+                  </Button>
+                  <Menu>
+                    <MenuButton outline="none" as={Button} bg="primary">
+                      <Avatar size="xs">
+                        <AvatarBadge bg="green.500" />
+                      </Avatar>
+                    </MenuButton>
+                    <MenuList color="black">
+                      <MenuGroup>
+                        <MenuItem>
+                          <Link href={`/users/${user.id}`}>
+                            <Flex flexDir="column">
+                              <Box py="1">{user.name}</Box>
+                              <Box fontWeight="600" py="1">
+                                {user.email}
+                              </Box>
+                            </Flex>
+                          </Link>
+                        </MenuItem>
+                        <MenuItem py="4">
+                          <Link href="/settings">
+                            <Box>
+                              <Icon mr="2" name="settings" />
+                              Settings
+                            </Box>
+                          </Link>
+                        </MenuItem>
+                        <MenuItem
+                          py="4"
+                          onClick={async () => {
+                            await logout()
+                            Router.replace("/login")
+                          }}
+                        >
+                          <>
+                            <Icon mr="2" name="repeat" />
+                            Log Out
+                          </>
+                        </MenuItem>
+                      </MenuGroup>
+                    </MenuList>
+                  </Menu>
+                </>
               ) : (
                 <>
                   <Box mx={2}>

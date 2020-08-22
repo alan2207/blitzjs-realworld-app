@@ -29,6 +29,7 @@ import { cardStyles } from "app/styles"
 import MarkdownPreview from "app/components/MarkdownPreview"
 import Form from "app/components/Form"
 import createComment from "app/comments/mutations/createComment"
+import formatDate from "app/utils/formatDate"
 
 type PageProps = {
   postData: PromiseReturnType<typeof getPost>
@@ -67,7 +68,7 @@ const PostPage = ({ postData }) => {
         <Flex justify="space-between" align="center" my="8">
           <Box>
             <Text>Created By: {post.User?.name}</Text>
-            <Text>Date: {post.createdAt}</Text>
+            <Text>Date: {formatDate(post.createdAt)}</Text>
           </Box>
 
           {session.userId === post.userId && (
@@ -146,7 +147,7 @@ const PostPage = ({ postData }) => {
             <Box>
               <Link href={`/users/${c.user.id}`}>{c.user.name || ""}</Link>
               <Text mb="2" color="gray.500" fontSize="xs">
-                {c.createdAt}
+                {formatDate(c.createdAt)}
               </Text>
               <Box>
                 <MarkdownPreview content={c.content} />

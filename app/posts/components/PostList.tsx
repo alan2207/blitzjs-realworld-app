@@ -2,6 +2,7 @@ import React from "react"
 import { Box, Flex, Heading, Text, Button, Icon } from "@chakra-ui/core"
 import { Link, useSession } from "blitz"
 import { cardStyles } from "app/styles"
+import formatDate from "app/utils/formatDate"
 import updatePost from "../mutations/updatePost"
 import EmptyList from "app/components/EmptyList"
 
@@ -39,9 +40,12 @@ const Post = ({ post, refetch }) => {
     <Flex flexDir="column" {...cardStyles} my="2">
       <Link href={`/users/${post.userId}`}>{post.User?.name || "User"}</Link>
       <Text mb="2" color="gray.500" fontSize="xs">
-        {post.createdAt}
+        {formatDate(post.createdAt)}
       </Text>
-      <Heading size="lg">{post.title}</Heading>
+      <Heading size="lg">
+        <Link href={`/posts/${post.id}`}>{post.title}</Link>
+      </Heading>
+
       <Text my="1" mb="4">
         {post.intro}
       </Text>

@@ -14,7 +14,7 @@ const EmptyList = () => {
       borderRadius="md"
     >
       <Icon name="not-allowed" size="3em" />
-      <Text>No Items Found</Text>
+      <Text fontSize="3xl">The List Is Empty</Text>
     </Flex>
   )
 }

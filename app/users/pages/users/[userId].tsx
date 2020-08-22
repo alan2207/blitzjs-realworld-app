@@ -1,5 +1,5 @@
 import React from "react"
-import { Head, useRouter, useQuery, useParam, BlitzPage, useSession } from "blitz"
+import { useRouter, useQuery, useParam, BlitzPage, useSession } from "blitz"
 import getUser from "app/users/queries/getUser"
 import MainLayout from "app/layouts/MainLayout"
 import {
