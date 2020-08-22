@@ -32,8 +32,8 @@ const Post = ({ post, refetch }) => {
   }
 
   const toggleButtonStyles = isAlreadyFavoriting
-    ? { bg: "yellow.200", color: "black" }
-    : { bg: "gray.200", color: "white" }
+    ? { bg: "black", color: "white" }
+    : { bg: "white", color: "black" }
 
   const favoriteCount = post?.favoritedBy?.length
 

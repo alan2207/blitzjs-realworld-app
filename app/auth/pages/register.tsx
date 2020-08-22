@@ -25,7 +25,7 @@ const RegisterPage: BlitzPage = () => {
   }
 
   return (
-    <MainLayout>
+    <MainLayout headTitle="Register">
       <Flex justify="center" align="center" h="100%" w="100%">
         <FormLayout title="Register">
           <Form

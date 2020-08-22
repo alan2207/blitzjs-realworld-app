@@ -3,9 +3,9 @@ import mergeAll from "lodash/fp/mergeAll"
 
 const customTheme = {
   colors: {
-    "bg-dark": presetTheme.colors.blue[700],
+    "bg-dark": presetTheme.colors.black,
     "bg-light": presetTheme.colors.gray[100],
-    "text-dark": presetTheme.colors.blue[700],
+    "text-dark": presetTheme.colors.black,
     "text-light": "white",
   },
 }

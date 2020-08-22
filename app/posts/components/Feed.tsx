@@ -60,7 +60,7 @@ const Feed = ({ tagName = "" }) => {
         <Tabs onChange={setTabIndex} index={tabIndex}>
           <TabList>
             <Tab>Global Feed</Tab>
-            <Tab>Personal Feed</Tab>
+            {session.userId && <Tab>Personal Feed</Tab>}
           </TabList>
 
           <PostList refetch={refetch} posts={posts} />

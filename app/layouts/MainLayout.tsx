@@ -15,13 +15,13 @@ import {
 import useAuthUser from "app/auth/hooks/useAuthUser"
 import logout from "app/auth/mutations/logout"
 
-const MainLayout = ({ children }) => {
+const MainLayout = ({ children, headTitle = "Real World App" }) => {
   const [user] = useAuthUser()
 
   return (
     <>
       <Head>
-        <title>Real World App</title>
+        <title>{headTitle}</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Flex flexDir="column">
@@ -50,7 +50,7 @@ const MainLayout = ({ children }) => {
                       <MenuItem
                         onClick={async () => {
                           await logout()
-                          Router.replace("/")
+                          Router.replace("/login")
                         }}
                       >
                         Log Out

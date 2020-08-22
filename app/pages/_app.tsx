@@ -1,8 +1,9 @@
 import { AppProps, ErrorComponent } from "blitz"
 import { ErrorBoundary } from "react-error-boundary"
 import { queryCache } from "react-query"
-import { CSSReset, ThemeProvider, Flex, Spinner } from "@chakra-ui/core"
+import { CSSReset, ThemeProvider } from "@chakra-ui/core"
 import { Suspense } from "react"
+import FullPageSpinner from "app/components/FullPageSpinner"
 import theme from "app/styles/theme"
 import "app/styles/index.css"
 import "react-markdown-editor-lite/lib/index.css"
@@ -19,13 +20,7 @@ export default function App({ Component, pageProps }: AppProps) {
     >
       <ThemeProvider theme={theme}>
         <CSSReset />
-        <Suspense
-          fallback={
-            <Flex h="100vh" w="100wv" justify="center" align="center">
-              <Spinner size="xl" />
-            </Flex>
-          }
-        >
+        <Suspense fallback={<FullPageSpinner />}>
           <Component {...pageProps} />
         </Suspense>
       </ThemeProvider>

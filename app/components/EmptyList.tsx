@@ -10,10 +10,10 @@ const EmptyList = () => {
       bg="gray.200"
       justify="center"
       align="center"
-      height="200px"
+      height="300px"
     >
       <Icon name="not-allowed" size="3em" />
-      <Text>Not Found</Text>
+      <Text>No Items Found</Text>
     </Flex>
   )
 }

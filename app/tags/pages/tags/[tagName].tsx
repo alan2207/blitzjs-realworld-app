@@ -5,10 +5,11 @@ import { useRouter } from "blitz"
 const TagFeedPage = () => {
   const router = useRouter()
 
+  const tagName = router?.params?.tagName || ""
   return (
-    <MainLayout>
+    <MainLayout headTitle={tagName}>
       <Flex py="8" mx="auto" maxW="containers.lg">
-        <Feed tagName={router.params.tagName || ""} />
+        <Feed tagName={tagName} />
       </Flex>
     </MainLayout>
   )

@@ -25,7 +25,7 @@ const LoginPage: BlitzPage = () => {
   }
 
   return (
-    <MainLayout>
+    <MainLayout headTitle="Login">
       <Flex justify="center" align="center" h="100%" w="100%">
         <FormLayout title="Login">
           <Form

@@ -68,24 +68,22 @@ const ShowUserPage: BlitzPage = () => {
     }
   }
   return (
-    <MainLayout>
-      <Head>
-        <title>{user.name || "User"}</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
+    <MainLayout headTitle={user.name || "User"}>
       <Box>
         <Flex bg="gray.200" justify="center" align="center" p="8">
           <Box textAlign="center">
             <Avatar size="xl" />
             <Heading textAlign="center">{user.name}</Heading>
-            {session.userId === userId ? (
+            {session?.userId === userId ? (
               <Button my="4" variant="outline" variantColor="primary">
                 Settings
               </Button>
             ) : (
-              <Button onClick={toggleFollow} my="4" variant="outline" variantColor="primary">
-                {isAlreadyFollowing ? "Unfollow" : "Follow"}
-              </Button>
+              session?.userId && (
+                <Button onClick={toggleFollow} my="4" variant="outline" variantColor="primary">
+                  {isAlreadyFollowing ? "Unfollow" : "Follow"}
+                </Button>
+              )
             )}
           </Box>
         </Flex>
