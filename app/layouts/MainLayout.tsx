@@ -12,6 +12,8 @@ import {
   Avatar,
   Button,
   Icon,
+  useColorMode,
+  IconButton,
 } from "@chakra-ui/core"
 import useAuthUser from "app/auth/hooks/useAuthUser"
 import logout from "app/auth/mutations/logout"
@@ -19,6 +21,7 @@ import logout from "app/auth/mutations/logout"
 const MainLayout = ({ children, headTitle = "Real World App" }) => {
   const [user] = useAuthUser()
   const router = useRouter()
+  const { colorMode, toggleColorMode } = useColorMode()
 
   return (
     <>
@@ -27,23 +30,40 @@ const MainLayout = ({ children, headTitle = "Real World App" }) => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Flex flexDir="column">
-        <Box bg="bg-dark" color="text-light" h="60px" as="nav">
+        <Box bg={`bg-dark`} color={"text-light"} h="60px" as="nav">
           <Flex h="100%" marginX="auto" maxW="containers.lg" justify="space-between" align="center">
             <Link href="/">Home</Link>
             <Flex justify="space-between">
               {user ? (
                 <>
-                  <Button onClick={() => router.push("/posts/create")} mr="4" color="text-dark">
+                  <Button
+                    onClick={() => router.push("/posts/create")}
+                    mr="4"
+                    bg="bg-light"
+                    color="text-dark"
+                  >
                     <Icon mr="2" name="add" />
                     Create Post
                   </Button>
+                  <IconButton
+                    aria-label="toggle-color-mode"
+                    mr="2"
+                    icon={colorMode === "light" ? "moon" : "sun"}
+                    bg="bg-light"
+                    color="text-dark"
+                    onClick={() => {
+                      toggleColorMode()
+                    }}
+                  >
+                    Color Mode
+                  </IconButton>
                   <Menu>
                     <MenuButton outline="none" as={Button} bg="primary">
                       <Avatar size="xs">
                         <AvatarBadge bg="green.500" />
                       </Avatar>
                     </MenuButton>
-                    <MenuList color="black">
+                    <MenuList color={colorMode === "light" ? "text-dark" : "text-light"}>
                       <MenuGroup>
                         <MenuItem>
                           <Link href={`/users/${user.id}`}>
@@ -92,20 +112,17 @@ const MainLayout = ({ children, headTitle = "Real World App" }) => {
             </Flex>
           </Flex>
         </Box>
-        <Box bg="bg-light" color="text-dark" h="calc(100vh - 60px)" overflowY="auto" as="main">
+        <Box
+          bg={colorMode === "light" ? "bg-light" : "bg-dark"}
+          color={colorMode === "light" ? "text-dark" : "text-light"}
+          h="calc(100vh - 60px)"
+          overflowY="auto"
+          as="main"
+        >
           <Box h="100%" marginX="auto">
             {children}
           </Box>
         </Box>
-        {/* <Flex justify="center" align="center" bg="bg-dark" color="text-light" h="60px" as="footer">
-          <a
-            href="https://blitzjs.com?utm_source=blitz-new&utm_medium=app-template&utm_campaign=blitz-new"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Powered by Blitz.js
-          </a>
-        </Flex> */}
       </Flex>
     </>
   )

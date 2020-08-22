@@ -24,6 +24,7 @@ import {
   ModalFooter,
   ModalBody,
   ModalCloseButton,
+  useColorMode,
 } from "@chakra-ui/core"
 import { cardStyles } from "app/styles"
 import MarkdownPreview from "app/components/MarkdownPreview"
@@ -36,6 +37,7 @@ type PageProps = {
 }
 
 const PostPage = ({ postData }) => {
+  const { colorMode } = useColorMode()
   const { isOpen, onOpen, onClose } = useDisclosure()
   const session = useSession()
   const router = useRouter()
@@ -62,7 +64,7 @@ const PostPage = ({ postData }) => {
 
   return (
     <MainLayout headTitle={post.title}>
-      <Box {...cardStyles} maxW="containers.lg" mx="auto" my="4" p="8">
+      <Box {...cardStyles(colorMode)} maxW="containers.lg" mx="auto" my="4" p="8">
         <Heading textAlign="center">{post.title}</Heading>
 
         <Flex justify="space-between" align="center" my="8">
@@ -87,7 +89,7 @@ const PostPage = ({ postData }) => {
         </Flex>
       </Box>
 
-      <Box {...cardStyles} maxW="containers.lg" mx="auto" my="4" p="8">
+      <Box {...cardStyles(colorMode)} maxW="containers.lg" mx="auto" my="4" p="8">
         <Heading>Comments</Heading>
         {session.userId && (
           <Button my="4" bg="bg-dark" color="text-light" onClick={onOpen}>
@@ -143,7 +145,7 @@ const PostPage = ({ postData }) => {
         </Modal>
 
         {post.comments.map((c) => (
-          <Box key={c.id} p="4" bg="gray.100" my="4" borderRadius="md">
+          <Box key={c.id} p="4" bg="gray.100" {...cardStyles(colorMode)} my="4">
             <Box>
               <Link href={`/users/${c.user.id}`}>{c.user.name || ""}</Link>
               <Text mb="2" color="gray.500" fontSize="xs">

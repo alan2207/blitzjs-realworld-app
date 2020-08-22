@@ -13,12 +13,14 @@ import {
   TabPanels,
   Tab,
   TabPanel,
+  useColorMode,
 } from "@chakra-ui/core"
 import updateUser from "app/users/mutations/updateUser"
 import PostList from "app/posts/components/PostList"
 import UserList from "app/users/components/UserList"
 
 const ShowUserPage: BlitzPage = () => {
+  const { colorMode } = useColorMode()
   const router = useRouter()
   const session = useSession()
   const userId = useParam("userId", "number")
@@ -70,7 +72,12 @@ const ShowUserPage: BlitzPage = () => {
   return (
     <MainLayout headTitle={user.name || "User"}>
       <Box>
-        <Flex bg="gray.200" justify="center" align="center" p="8">
+        <Flex
+          bg={colorMode === "light" ? "gray.200" : "gray.700"}
+          justify="center"
+          align="center"
+          p="8"
+        >
           <Box textAlign="center">
             <Avatar size="xl" />
             <Heading textAlign="center">{user.name}</Heading>

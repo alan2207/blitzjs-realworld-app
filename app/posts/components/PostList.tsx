@@ -1,5 +1,5 @@
 import React from "react"
-import { Box, Flex, Heading, Text, Button, Icon } from "@chakra-ui/core"
+import { Box, Flex, Heading, Text, Button, Icon, useColorMode } from "@chakra-ui/core"
 import { Link, useSession } from "blitz"
 import { cardStyles } from "app/styles"
 import formatDate from "app/utils/formatDate"
@@ -7,6 +7,7 @@ import updatePost from "../mutations/updatePost"
 import EmptyList from "app/components/EmptyList"
 
 const Post = ({ post, refetch }) => {
+  const { colorMode } = useColorMode()
   const session = useSession()
   const isAlreadyFavoriting = !!post?.favoritedBy?.find((f) => f.id == session?.userId)
 
@@ -37,7 +38,7 @@ const Post = ({ post, refetch }) => {
   const favoriteCount = post?.favoritedBy?.length
 
   return (
-    <Flex flexDir="column" {...cardStyles} my="2">
+    <Flex flexDir="column" {...cardStyles(colorMode)} my="2">
       <Link href={`/users/${post.userId}`}>{post.User?.name || "User"}</Link>
       <Text mb="2" color="gray.500" fontSize="xs">
         {formatDate(post.createdAt)}
