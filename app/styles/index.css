@@ -1,8 +1,8 @@
 .markdown-preview h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  font-size: 2rem;
+.markdown-preview h2,
+.markdown-preview h3,
+.markdown-preview h4,
+.markdown-preview h5,
+.markdown-preview h6 {
+  font-size: 3rem;
 }

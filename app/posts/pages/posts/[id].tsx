@@ -51,6 +51,7 @@ const PostPage = ({ postData }) => {
             user: true,
           },
         },
+        tags: true,
       },
     },
     {
@@ -60,10 +61,10 @@ const PostPage = ({ postData }) => {
 
   return (
     <MainLayout headTitle={post.title}>
-      <Box {...cardStyles} maxW="containers.lg" mx="auto" my="4" p="4">
+      <Box {...cardStyles} maxW="containers.lg" mx="auto" my="4" p="8">
         <Heading textAlign="center">{post.title}</Heading>
 
-        <Flex justify="space-between" align="center" p="8">
+        <Flex justify="space-between" align="center" my="8">
           <Box>
             <Text>Created By: {post.User?.name}</Text>
             <Text>Date: {post.createdAt}</Text>
@@ -74,6 +75,15 @@ const PostPage = ({ postData }) => {
           )}
         </Flex>
         <MarkdownPreview content={post.content} />
+        <Flex my="1">
+          {post?.tags.map((t) => (
+            <Link key={t.name} href={`/tags/${t.name}`}>
+              <Button mr="2" size="sm">
+                #{t.name}
+              </Button>
+            </Link>
+          ))}
+        </Flex>
       </Box>
 
       <Box {...cardStyles} maxW="containers.lg" mx="auto" my="4" p="8">
@@ -163,6 +173,7 @@ export const getServerSideProps: GetServerSideProps<PageProps> = async ({ req, r
             user: true,
           },
         },
+        tags: true,
       },
     },
     { req, res }
