@@ -23,7 +23,10 @@ const CreatePostPage = () => {
                 data: {
                   ...values,
                   tags: {
-                    connect: tags?.map((t) => ({ id: t.id })),
+                    connectOrCreate: tags?.map((t) => ({
+                      where: { id: t.value },
+                      create: { name: t.label.toLowerCase() },
+                    })),
                   },
                   User: {
                     connect: {
@@ -58,7 +61,7 @@ const CreatePostPage = () => {
                 label: "Tags",
                 type: "select",
                 validation: { required: true },
-                options: tags?.map((t) => ({ id: t.id, name: t.name })) || [],
+                options: tags,
                 selectParams: {
                   optionValueKey: "id",
                   optionLabelKey: "name",

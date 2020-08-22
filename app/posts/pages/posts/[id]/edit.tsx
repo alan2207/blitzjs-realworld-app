@@ -46,7 +46,8 @@ const EditPostPage = () => {
           <Form
             onSubmit={async ({ values: { tags, ...values } }) => {
               const removingTags = differenceBy(post.tags, tags).map((t) => ({ id: t.id }))
-              const addingTags = differenceBy(tags, post.tags).map((t) => ({ id: t.id }))
+              const addingTags = differenceBy(tags, post.tags)
+
               await updatePost({
                 where: {
                   id: +router.params.id,
@@ -54,7 +55,11 @@ const EditPostPage = () => {
                 data: {
                   ...values,
                   tags: {
-                    connect: addingTags.length > 0 ? addingTags : undefined,
+                    connectOrCreate: addingTags.map((t) => ({
+                      where: { id: t.value },
+                      create: { name: t.label },
+                    })),
+
                     disconnect: removingTags.length > 0 ? removingTags : undefined,
                   },
                 },
@@ -85,7 +90,7 @@ const EditPostPage = () => {
                 label: "Tags",
                 type: "select",
                 validation: { required: true },
-                options: tags?.map((t) => ({ id: t.id, name: t.name })) || [],
+                options: tags,
                 selectParams: {
                   optionValueKey: "id",
                   optionLabelKey: "name",
@@ -97,7 +102,7 @@ const EditPostPage = () => {
               title: post.title,
               intro: post.intro,
               content: post.content,
-              tags: post.tags,
+              tags: post.tags?.map((t) => ({ value: t.id, label: t.name })) || [],
             }}
           />
         </FormLayout>

@@ -74,7 +74,7 @@ const PostList = ({ posts, refetch }) => {
     return <EmptyList />
   }
   return (
-    <Box w="100%">
+    <Box my="4" w="100%">
       {posts.map((p) => (
         <Post key={p.id} refetch={refetch} post={p} />
       ))}

@@ -1,5 +1,5 @@
 import React from "react"
-import { Box, Flex, Stack, Tabs, TabList, Tab, Button, Heading } from "@chakra-ui/core"
+import { Box, Flex, Stack, Tabs, TabList, Tab, Button, Heading, Input } from "@chakra-ui/core"
 import { useSession, useInfiniteQuery, useQuery, Link } from "blitz"
 import getPosts from "../queries/getPosts"
 import PostList from "../components/PostList"
@@ -9,6 +9,7 @@ const Feed = ({ tagName = "" }) => {
   const session = useSession()
   const [feedQuery, setFeedQuery] = React.useState({})
   const [tabIndex, setTabIndex] = React.useState(0)
+  const [tagFilter, setTagFilter] = React.useState("")
 
   const [postGroups, { refetch, isFetchingMore, fetchMore, canFetchMore }] = useInfiniteQuery(
     getPosts,
@@ -63,7 +64,7 @@ const Feed = ({ tagName = "" }) => {
 
   return (
     <Stack isInline spacing="4" w="100%">
-      <Box w="80%">
+      <Box w={["100%", "100%", "80%"]}>
         {tagName && <Heading># {tagName}</Heading>}
         <Tabs onChange={setTabIndex} index={tabIndex}>
           <TabList>
@@ -89,17 +90,22 @@ const Feed = ({ tagName = "" }) => {
           )}
         </Tabs>
       </Box>
-      <Box w="20%">
-        <Heading mt="16" mb="4" size="md">
-          Tags:
-        </Heading>
-        <Flex flexDir="column">
-          {tags.map((tag) => (
-            <Box p="2">
-              <Link href={`/tags/${tag.name}`}>{"#" + tag.name}</Link>
-            </Box>
-          ))}
-        </Flex>
+      <Box display={["none", "none", "block"]} w="20%">
+        <Box px="4" py="2" borderRadius="md" shadow="md" bg="white">
+          <Heading py="2" borderBottom="1px solid black" mb="4" size="md">
+            Tags:
+          </Heading>
+          <Input onChange={(e) => setTagFilter(e.target.value)} placeholder="Tags" />
+          <Flex maxH="70vh" overflowY="auto" flexDir="column">
+            {tags
+              .filter((t) => t.name.includes(tagFilter))
+              .map((tag) => (
+                <Box p="2">
+                  <Link href={`/tags/${tag.name}`}>{"#" + tag.name}</Link>
+                </Box>
+              ))}
+          </Flex>
+        </Box>
       </Box>
     </Stack>
   )

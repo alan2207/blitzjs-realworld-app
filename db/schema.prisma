@@ -15,7 +15,7 @@ datasource sqlite {
 
 generator client {
   provider        = "prisma-client-js"
-  previewFeatures = ["transactionApi"]
+  previewFeatures = ["transactionApi", "connectOrCreate"]
 }
 
 // --------------------------------------

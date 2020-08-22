@@ -11,7 +11,7 @@ import {
   Textarea,
   useToast,
 } from "@chakra-ui/core"
-import ReactSelect from "react-select"
+import CreatableSelect from "react-select/creatable"
 import marked from "marked"
 import MdEditor from "app/components/MDEditor"
 type Field = {
@@ -125,13 +125,22 @@ const Form = ({ fields, onSubmit, defaultValues }: Props) => {
             )}
             {v.type === "select" && v.selectParams && (
               <Controller
-                as={<ReactSelect />}
-                isClearable={false}
-                getOptionValue={(t) => t[v.selectParams?.optionValueKey || ""]}
-                getOptionLabel={(t) => t[v.selectParams?.optionLabelKey || ""]}
-                onChange={(v) => setValue(k, v)}
-                isMulti={v.selectParams.isMulti}
-                options={v.options}
+                render={(props) => (
+                  <CreatableSelect
+                    {...props}
+                    isClearable={false}
+                    getNewOptionData={(inputValue, optionLabel) => ({
+                      label: inputValue,
+                      value: Date.now(),
+                      __isNew__: true,
+                    })}
+                    // getOptionValue={(t) => t[v.selectParams?.optionValueKey || ""]}
+                    // getOptionLabel={(t) => t[v.selectParams?.optionLabelKey || ""]}
+                    onChange={(v) => setValue(k, v)}
+                    isMulti={v.selectParams.isMulti}
+                    options={v.options?.map((o) => ({ value: o.id, label: o.name }))}
+                  />
+                )}
                 name={k}
                 control={control}
               />
