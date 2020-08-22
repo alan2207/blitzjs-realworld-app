@@ -47,7 +47,7 @@ const Post = ({ post, refetch }) => {
       </Text>
       <Flex my="1">
         {post.tags.map((t) => (
-          <Link href={`/tags/${t.name}`}>
+          <Link key={t.name} href={`/tags/${t.name}`}>
             <Button mr="2" size="sm">
               #{t.name}
             </Button>
@@ -72,7 +72,7 @@ const PostList = ({ posts, refetch }) => {
   return (
     <Box w="100%">
       {posts.map((p) => (
-        <Post refetch={refetch} post={p} />
+        <Post key={p.id} refetch={refetch} post={p} />
       ))}
     </Box>
   )

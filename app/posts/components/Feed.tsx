@@ -1,14 +1,11 @@
 import React from "react"
 import { Box, Flex, Stack, Tabs, TabList, Tab, Button, Heading } from "@chakra-ui/core"
-import { usePaginatedQuery, useSession } from "blitz"
+import { useSession, useInfiniteQuery } from "blitz"
 import getPosts from "../queries/getPosts"
 import PostList from "../components/PostList"
 
-const ITEMS_PER_PAGE = 5
-
 const Feed = ({ tagName = "" }) => {
   const session = useSession()
-  const [page, setPage] = React.useState(0)
   const [feedQuery, setFeedQuery] = React.useState({})
   const [tabIndex, setTabIndex] = React.useState(0)
 
@@ -26,7 +23,7 @@ const Feed = ({ tagName = "" }) => {
       : {}
     if (tabIndex === 0) {
       setFeedQuery({ ...tagQuery })
-    } else if (tabIndex === 1) {
+    } else if (tabIndex === 1 && session.userId) {
       setFeedQuery({
         User: {
           followedBy: {
@@ -42,16 +39,22 @@ const Feed = ({ tagName = "" }) => {
     }
   }, [tabIndex, session.userId, tagName])
 
-  const [{ posts, hasMore }, { refetch }] = usePaginatedQuery(getPosts, {
-    where: feedQuery,
-    skip: ITEMS_PER_PAGE * page,
-    take: ITEMS_PER_PAGE,
-    include: {
-      User: true,
-      favoritedBy: true,
-      tags: true,
+  const [postGroups, { refetch, isFetchingMore, fetchMore, canFetchMore }] = useInfiniteQuery(
+    getPosts,
+    {
+      where: feedQuery,
+      skip: 0,
+      take: 5,
+      include: {
+        User: true,
+        favoritedBy: true,
+        tags: true,
+      },
     },
-  })
+    {
+      getFetchMore: (lastGroup) => lastGroup.nextPage,
+    }
+  )
 
   return (
     <Stack spacing="4" w="100%">
@@ -63,16 +66,22 @@ const Feed = ({ tagName = "" }) => {
             {session.userId && <Tab>Personal Feed</Tab>}
           </TabList>
 
-          <PostList refetch={refetch} posts={posts} />
-          <Flex align="center" justify="space-between">
-            <Button isDisabled={page === 0} onClick={() => setPage((p) => p - 1)}>
-              Previous
-            </Button>
-            <Box>Page {page + 1}</Box>
-            <Button isDisabled={!hasMore} onClick={() => setPage((p) => p + 1)}>
-              Next
-            </Button>
-          </Flex>
+          {postGroups.map(({ posts }, i) => (
+            <PostList key={i} refetch={refetch} posts={posts} />
+          ))}
+          {postGroups.length > 0 && (
+            <Flex mt="4" justify="center" align="center">
+              <Button
+                bg="bg-dark"
+                color="text-light"
+                isLoading={!!isFetchingMore}
+                onClick={() => fetchMore()}
+                isDisabled={!canFetchMore || !!isFetchingMore}
+              >
+                {canFetchMore ? "Load More Posts" : "That's All Folks :)"}
+              </Button>
+            </Flex>
+          )}
         </Tabs>
       </Box>
     </Stack>
