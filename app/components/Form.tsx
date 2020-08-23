@@ -126,20 +126,21 @@ const Form = ({ fields, onSubmit, defaultValues }: Props) => {
             {v.type === "select" && v.selectParams && (
               <Controller
                 render={(props) => (
-                  <CreatableSelect
-                    {...props}
-                    isClearable={false}
-                    getNewOptionData={(inputValue, optionLabel) => ({
-                      label: inputValue,
-                      value: Date.now(),
-                      __isNew__: true,
-                    })}
-                    // getOptionValue={(t) => t[v.selectParams?.optionValueKey || ""]}
-                    // getOptionLabel={(t) => t[v.selectParams?.optionLabelKey || ""]}
-                    onChange={(v) => setValue(k, v)}
-                    isMulti={v.selectParams.isMulti}
-                    options={v.options?.map((o) => ({ value: o.id, label: o.name }))}
-                  />
+                  <Box color="black">
+                    <CreatableSelect
+                      {...props}
+                      style={{ color: "black" }}
+                      isClearable={false}
+                      getNewOptionData={(inputValue, optionLabel) => ({
+                        label: inputValue,
+                        value: Date.now(),
+                        __isNew__: true,
+                      })}
+                      onChange={(v) => setValue(k, v)}
+                      isMulti={v.selectParams?.isMulti}
+                      options={v.options?.map((o) => ({ value: o.id, label: o.name }))}
+                    />
+                  </Box>
                 )}
                 name={k}
                 control={control}

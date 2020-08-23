@@ -8,12 +8,12 @@ import {
   MenuList,
   MenuItem,
   MenuGroup,
-  AvatarBadge,
   Avatar,
   Button,
   Icon,
   useColorMode,
   IconButton,
+  Heading,
 } from "@chakra-ui/core"
 import useAuthUser from "app/auth/hooks/useAuthUser"
 import logout from "app/auth/mutations/logout"
@@ -30,9 +30,16 @@ const MainLayout = ({ children, headTitle = "Real World App" }) => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Flex flexDir="column">
-        <Box bg={`bg-dark`} color={"text-light"} h="60px" as="nav">
+        <Box
+          bg={colorMode === "dark" ? "gray.800" : `bg-dark`}
+          color={"text-light"}
+          h="60px"
+          as="nav"
+        >
           <Flex h="100%" marginX="auto" maxW="containers.lg" justify="space-between" align="center">
-            <Link href="/">Home</Link>
+            <Heading size="md">
+              <Link href="/">Home</Link>
+            </Heading>
             <Flex justify="space-between">
               {user ? (
                 <>
@@ -59,9 +66,7 @@ const MainLayout = ({ children, headTitle = "Real World App" }) => {
                   </IconButton>
                   <Menu>
                     <MenuButton outline="none" as={Button} bg="primary">
-                      <Avatar size="xs">
-                        <AvatarBadge bg="green.500" />
-                      </Avatar>
+                      <Avatar size="xs"></Avatar>
                     </MenuButton>
                     <MenuList color={colorMode === "light" ? "text-dark" : "text-light"}>
                       <MenuGroup>
@@ -100,14 +105,14 @@ const MainLayout = ({ children, headTitle = "Real World App" }) => {
                   </Menu>
                 </>
               ) : (
-                <>
+                <Flex align="center">
                   <Box mx={2}>
                     <Link href="/login">Login</Link>
                   </Box>
                   <Box mx={2}>
                     <Link href="/register">Register</Link>
                   </Box>
-                </>
+                </Flex>
               )}
             </Flex>
           </Flex>

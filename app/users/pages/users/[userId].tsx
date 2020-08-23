@@ -24,7 +24,7 @@ const ShowUserPage: BlitzPage = () => {
   const router = useRouter()
   const session = useSession()
   const userId = useParam("userId", "number")
-  const [user, { mutate, refetch }] = useQuery(getUser, {
+  const [user, { refetch }] = useQuery(getUser, {
     where: {
       id: userId,
     },
@@ -48,13 +48,13 @@ const ShowUserPage: BlitzPage = () => {
     },
   })
 
-  const isAlreadyFollowing = !!user?.followedBy?.find((f) => f.id == session?.userId)
+  const isAlreadyFollowing = !!user?.followedBy?.find((f) => f.id === session?.userId)
 
   const toggleFollow = async () => {
     const operation = isAlreadyFollowing ? "disconnect" : "connect"
     if (!session.userId) return
     try {
-      const user = await updateUser({
+      await updateUser({
         where: {
           id: userId,
         },
@@ -64,7 +64,7 @@ const ShowUserPage: BlitzPage = () => {
           },
         },
       })
-      mutate(user)
+      refetch()
     } catch (err) {
       console.log(err)
     }

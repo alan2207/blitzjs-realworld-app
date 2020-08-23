@@ -18,7 +18,7 @@ const MarkdownPreview = ({ content }) => {
           })
         ),
       }}
-    />
+    ></Box>
   )
 }
 

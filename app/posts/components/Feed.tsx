@@ -43,8 +43,6 @@ const Feed = ({ tagName = "" }) => {
 
   const [tags] = useQuery(getTags, {})
 
-  console.log(tags)
-
   React.useEffect(() => {
     const tagQuery = tagName
       ? {
@@ -76,7 +74,7 @@ const Feed = ({ tagName = "" }) => {
   }, [tabIndex, session.userId, tagName])
 
   return (
-    <Stack isInline spacing="4" w="100%">
+    <Stack isInline spacing={[0, 0, 4]} w="100%">
       <Box w={["100%", "100%", "80%"]}>
         {tagName && <Heading># {tagName}</Heading>}
         <Tabs onChange={setTabIndex} index={tabIndex}>
@@ -104,16 +102,16 @@ const Feed = ({ tagName = "" }) => {
         </Tabs>
       </Box>
       <Box display={["none", "none", "block"]} w="20%">
-        <Box px="4" py="2" borderRadius="md" {...cardStyles(colorMode)}>
+        <Box {...{ ...cardStyles(colorMode), p: 3 }}>
           <Heading py="2" borderBottom="1px solid black" mb="4" size="md">
             Tags:
           </Heading>
-          <Input onChange={(e) => setTagFilter(e.target.value)} placeholder="Tags" />
-          <Flex maxH="70vh" overflowY="auto" flexDir="column">
+          <Input onChange={(e) => setTagFilter(e.target.value)} placeholder="Search Tag" />
+          <Flex maxH="60vh" overflowY="auto" flexDir="column">
             {tags
               .filter((t) => t.name.includes(tagFilter))
               .map((tag) => (
-                <Box p="2">
+                <Box py="2">
                   <Link href={`/tags/${tag.name}`}>{"#" + tag.name}</Link>
                 </Box>
               ))}

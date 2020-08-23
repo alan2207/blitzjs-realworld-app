@@ -9,7 +9,7 @@ import EmptyList from "app/components/EmptyList"
 const Post = ({ post, refetch }) => {
   const { colorMode } = useColorMode()
   const session = useSession()
-  const isAlreadyFavoriting = !!post?.favoritedBy?.find((f) => f.id == session?.userId)
+  const isAlreadyFavoriting = !!post?.favoritedBy?.find((f) => f.id === session?.userId)
 
   const toggleFavorite = async () => {
     const operation = isAlreadyFavoriting ? "disconnect" : "connect"

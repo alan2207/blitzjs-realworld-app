@@ -1,5 +1,5 @@
 import React from "react"
-import { useQuery, Router, useSession, useRouter, ErrorComponent } from "blitz"
+import { useQuery, Router, useSession, ErrorComponent, useParams } from "blitz"
 import getTags from "app/tags/queries/getTags"
 import MainLayout from "app/layouts/MainLayout"
 import FormLayout from "app/layouts/FormLayout"
@@ -11,19 +11,19 @@ import getPost from "app/posts/queries/getPost"
 import FullPageSpinner from "app/components/FullPageSpinner"
 
 const EditPostPage = () => {
+  const params = useParams("number")
   const session = useSession()
-  const router = useRouter()
   const [post, { isFetching }] = useQuery(
     getPost,
     {
       where: {
-        id: +router.params.id,
+        id: params.id,
       },
       include: {
         tags: true,
       },
     },
-    { enabled: +router.params.id }
+    { enabled: params.id }
   )
   const [tags] = useQuery(getTags, {})
 
@@ -45,17 +45,17 @@ const EditPostPage = () => {
         <FormLayout title="Edit Post">
           <Form
             onSubmit={async ({ values: { tags, ...values } }) => {
-              const removingTags = differenceBy(post.tags, tags).map((t) => ({ id: t.id }))
-              const addingTags = differenceBy(tags, post.tags)
+              const removingTags = differenceBy(post?.tags, tags).map((t: any) => ({ id: t.id }))
+              const addingTags = differenceBy(tags, post?.tags)
 
               await updatePost({
                 where: {
-                  id: +router.params.id,
+                  id: params.id,
                 },
                 data: {
                   ...values,
                   tags: {
-                    connectOrCreate: addingTags.map((t) => ({
+                    connectOrCreate: addingTags.map((t: any) => ({
                       where: { id: t.value },
                       create: { name: t.label },
                     })),
@@ -102,7 +102,7 @@ const EditPostPage = () => {
               title: post.title,
               intro: post.intro,
               content: post.content,
-              tags: post.tags?.map((t) => ({ value: t.id, label: t.name })) || [],
+              tags: post?.tags?.map((t) => ({ value: t.id, label: t.name })) || [],
             }}
           />
         </FormLayout>

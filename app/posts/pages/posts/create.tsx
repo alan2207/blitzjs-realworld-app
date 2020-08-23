@@ -1,5 +1,5 @@
 import React from "react"
-import { useQuery, Router, Head } from "blitz"
+import { useQuery, Router } from "blitz"
 import getTags from "app/tags/queries/getTags"
 import MainLayout from "app/layouts/MainLayout"
 import FormLayout from "app/layouts/FormLayout"
@@ -7,7 +7,6 @@ import Form from "app/components/Form"
 import { Flex } from "@chakra-ui/core"
 import createPost from "app/posts/mutations/createPost"
 import useAuthUser from "app/auth/hooks/useAuthUser"
-import allowAuthorizedRoles from "app/utils/allowAuthorizedRoles"
 
 const CreatePostPage = () => {
   const [authUser] = useAuthUser()
@@ -80,11 +79,6 @@ const CreatePostPage = () => {
       </Flex>
     </MainLayout>
   )
-}
-
-export const getServerSideProps = async ({ req, res }) => {
-  await allowAuthorizedRoles({ roles: ["admin", "user"], req, res })
-  return { props: {} }
 }
 
 export default CreatePostPage

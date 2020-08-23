@@ -11,13 +11,11 @@ const SettingsPage = () => {
   const session = useSession()
   const [user] = useQuery(getUser, { where: { id: session.userId } }, { enabled: !!session.userId })
 
-  console.log({ user })
-
   const onSubmit = async ({ values }) => {
     try {
       await updateUser({
         where: {
-          id: session.userId,
+          id: session?.userId,
         },
         data: values,
       })

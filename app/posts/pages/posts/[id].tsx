@@ -1,13 +1,14 @@
 import React from "react"
 import MainLayout from "app/layouts/MainLayout"
 import {
-  ssrQuery,
-  GetServerSideProps,
-  PromiseReturnType,
   useQuery,
   useRouter,
   useSession,
   Link,
+  useParams,
+  ssrQuery,
+  GetServerSideProps,
+  PromiseReturnType,
 } from "blitz"
 import getPost from "app/posts/queries/getPost"
 import {
@@ -41,11 +42,12 @@ const PostPage = ({ postData }) => {
   const { isOpen, onOpen, onClose } = useDisclosure()
   const session = useSession()
   const router = useRouter()
+  const params = useParams("number")
   const [post, { refetch }] = useQuery(
     getPost,
     {
       where: {
-        id: +router.params.id,
+        id: params?.id,
       },
       include: {
         User: true,
@@ -74,10 +76,10 @@ const PostPage = ({ postData }) => {
           </Box>
 
           {session.userId === post.userId && (
-            <Button onClick={() => router.push(`/posts/${router.params.id}/edit`)}>Edit</Button>
+            <Button onClick={() => router.push(`/posts/${params.id}/edit`)}>Edit</Button>
           )}
         </Flex>
-        <MarkdownPreview content={post.content} />
+        <MarkdownPreview content={post?.content || ""} />
         <Flex my="1">
           {post?.tags.map((t) => (
             <Link key={t.name} href={`/tags/${t.name}`}>
@@ -114,12 +116,12 @@ const PostPage = ({ postData }) => {
                       ...values,
                       post: {
                         connect: {
-                          id: +router.params.id,
+                          id: params.id,
                         },
                       },
                       user: {
                         connect: {
-                          id: +session?.userId,
+                          id: session?.userId,
                         },
                       },
                     },
@@ -145,7 +147,7 @@ const PostPage = ({ postData }) => {
         </Modal>
 
         {post.comments.map((c) => (
-          <Box key={c.id} p="4" bg="gray.100" {...cardStyles(colorMode)} my="4">
+          <Box key={c.id} {...cardStyles(colorMode)} my="4">
             <Box>
               <Link href={`/users/${c.user.id}`}>{c.user.name || ""}</Link>
               <Text mb="2" color="gray.500" fontSize="xs">
@@ -167,7 +169,8 @@ export const getServerSideProps: GetServerSideProps<PageProps> = async ({ req, r
     getPost,
     {
       where: {
-        id: +params.id,
+        //@ts-ignore
+        id: +params?.id,
       },
       include: {
         User: true,

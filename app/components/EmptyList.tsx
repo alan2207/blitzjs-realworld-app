@@ -8,7 +8,7 @@ const EmptyList = () => {
       flexDir="column"
       mt="2"
       width="100%"
-      bg={colorMode === "light" ? "gray.200" : "gray.700"}
+      bg={colorMode === "light" ? "gray.200" : "gray.800"}
       justify="center"
       align="center"
       height="300px"
