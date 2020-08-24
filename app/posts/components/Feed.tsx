@@ -112,7 +112,9 @@ const Feed = ({ tagName = "" }) => {
               .filter((t) => t.name.includes(tagFilter))
               .map((tag) => (
                 <Box py="2">
-                  <Link href={`/tags/${tag.name}`}>{"#" + tag.name}</Link>
+                  <Link href="/tags/[tagName]" as={`/tags/${tag.name}`}>
+                    {"#" + tag.name}
+                  </Link>
                 </Box>
               ))}
           </Flex>

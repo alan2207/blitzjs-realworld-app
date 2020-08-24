@@ -15,7 +15,7 @@ const UserList = ({ users }) => {
       {users.map((u) => (
         <Flex justify="space-between" align="center" {...cardStyles(colorMode)} my="2">
           <Heading size="sm">{u.name}</Heading>
-          <Button onClick={() => router.push(`/users/${u.id}`)}>
+          <Button onClick={() => router.push("/users/[userId]", `/users/${u.id}`)}>
             <Icon name="info" mr="2" /> Info
           </Button>
         </Flex>

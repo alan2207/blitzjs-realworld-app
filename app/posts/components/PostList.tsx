@@ -39,12 +39,16 @@ const Post = ({ post, refetch }) => {
 
   return (
     <Flex flexDir="column" {...cardStyles(colorMode)} my="2">
-      <Link href={`/users/${post.userId}`}>{post.User?.name || "User"}</Link>
+      <Link href="/users/[userId]" as={`/users/${post.userId}`}>
+        {post.User?.name || "User"}
+      </Link>
       <Text mb="2" color="gray.500" fontSize="xs">
         {formatDate(post.createdAt)}
       </Text>
       <Heading size="lg">
-        <Link href={`/posts/${post.id}`}>{post.title}</Link>
+        <Link href="/posts/[id]" as={`/posts/${post.id}`}>
+          {post.title}
+        </Link>
       </Heading>
 
       <Text my="1" mb="4">
@@ -52,7 +56,7 @@ const Post = ({ post, refetch }) => {
       </Text>
       <Flex my="1">
         {post.tags.map((t) => (
-          <Link key={t.name} href={`/tags/${t.name}`}>
+          <Link key={t.name} href="/tags/[tagName]" as={`/tags/${t.name}`}>
             <Button mr="2" size="sm">
               #{t.name}
             </Button>
@@ -60,7 +64,9 @@ const Post = ({ post, refetch }) => {
         ))}
       </Flex>
       <Flex justify="space-between" align="flex-end">
-        <Link href={`/posts/${post.id}`}>Read More</Link>{" "}
+        <Link href="/posts/[id]" as={`/posts/${post.id}`}>
+          Read More
+        </Link>{" "}
         <Button variant="outline" onClick={toggleFavorite} {...toggleButtonStyles}>
           <Icon mr="2" name="star" />
           <Text>{favoriteCount}</Text>
