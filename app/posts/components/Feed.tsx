@@ -74,11 +74,11 @@ const Feed = ({ tagName = "" }) => {
   }, [tabIndex, session.userId, tagName])
 
   return (
-    <Stack isInline spacing={[0, 0, 4]} w="100%">
+    <Stack isInline spacing={[0, 0, 8]} w="100%">
       <Box w={["100%", "100%", "80%"]}>
         {tagName && <Heading># {tagName}</Heading>}
         <Tabs onChange={setTabIndex} index={tabIndex}>
-          <TabList>
+          <TabList mb="8">
             <Tab>Global Feed</Tab>
             {session.userId && <Tab>Personal Feed</Tab>}
           </TabList>
@@ -101,7 +101,7 @@ const Feed = ({ tagName = "" }) => {
           )}
         </Tabs>
       </Box>
-      <Box display={["none", "none", "block"]} w="20%">
+      <Box mt="16" display={["none", "none", "block"]} w="20%">
         <Box {...{ ...cardStyles(colorMode), p: 3 }}>
           <Heading py="2" borderBottom="1px solid black" mb="4" size="md">
             Tags:

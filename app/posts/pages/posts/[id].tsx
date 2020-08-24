@@ -76,7 +76,9 @@ const PostPage = ({ postData }) => {
           </Box>
 
           {session.userId === post.userId && (
-            <Button onClick={() => router.push(`/posts/${params.id}/edit`)}>Edit</Button>
+            <Button onClick={() => router.push("/posts/[id]/edit", `/posts/${params.id}/edit`)}>
+              Edit
+            </Button>
           )}
         </Flex>
         <MarkdownPreview content={post?.content || ""} />

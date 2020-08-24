@@ -12,8 +12,8 @@ import {
   useToast,
 } from "@chakra-ui/core"
 import CreatableSelect from "react-select/creatable"
-import marked from "marked"
 import MdEditor from "app/components/MDEditor"
+import MarkdownPreview from "./MarkdownPreview"
 type Field = {
   type: "text" | "number" | "email" | "password" | "select" | "textarea" | "markdown" | "select"
   name: string
@@ -115,7 +115,7 @@ const Form = ({ fields, onSubmit, defaultValues }: Props) => {
                   <MdEditor
                     {...props}
                     onChange={({ text }) => setValue(k, text)}
-                    renderHTML={(text) => marked(text)}
+                    renderHTML={(text) => <MarkdownPreview content={text} />}
                     style={{ height: "300px" }}
                   />
                 )}

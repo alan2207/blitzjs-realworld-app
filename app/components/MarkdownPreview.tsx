@@ -1,24 +1,28 @@
 import React from "react"
-import marked from "marked"
-import DOMPurify from "isomorphic-dompurify"
 import { Box } from "@chakra-ui/core"
-import Prism from "prismjs"
+import ReactMarkdown from "react-markdown"
+import MDXComponents from "./MDXComponents"
 
 const MarkdownPreview = ({ content }) => {
   return (
-    <Box
-      w="100%"
-      className="markdown-preview"
-      dangerouslySetInnerHTML={{
-        __html: DOMPurify.sanitize(
-          marked(content, {
-            highlight: function (code, lang) {
-              return Prism.highlight(code, Prism.languages[lang], lang)
-            },
-          })
-        ),
-      }}
-    ></Box>
+    <Box w="100%">
+      <ReactMarkdown
+        source={content}
+        renderers={{
+          paragraph: MDXComponents.p,
+          blockquote: MDXComponents.blockquote,
+          link: MDXComponents.a,
+          list: MDXComponents.ul,
+          listItem: MDXComponents.li,
+          table: MDXComponents.table,
+          tableHead: MDXComponents.th,
+          tableCell: MDXComponents.td,
+          heading: MDXComponents.heading,
+          code: MDXComponents.code,
+          inlineCode: MDXComponents.inlineCode,
+        }}
+      />
+    </Box>
   )
 }
 

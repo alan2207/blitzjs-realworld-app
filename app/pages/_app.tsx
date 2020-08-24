@@ -5,9 +5,7 @@ import { CSSReset, ThemeProvider, ColorModeProvider } from "@chakra-ui/core"
 import { Suspense } from "react"
 import FullPageSpinner from "app/components/FullPageSpinner"
 import theme from "app/styles/theme"
-import "app/styles/index.css"
 import "react-markdown-editor-lite/lib/index.css"
-import "prismjs/themes/prism-tomorrow.css"
 
 export default function App({ Component, pageProps }: AppProps) {
   return (

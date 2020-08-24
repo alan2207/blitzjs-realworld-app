@@ -1,12 +1,23 @@
 import React from "react"
-import { Tabs, TabList, TabPanels, Tab, TabPanel, Flex, Heading } from "@chakra-ui/core"
+import {
+  Tabs,
+  TabList,
+  TabPanels,
+  Tab,
+  TabPanel,
+  Flex,
+  Heading,
+  useColorMode,
+} from "@chakra-ui/core"
 import MainLayout from "app/layouts/MainLayout"
 import { useSession, useQuery, useRouter } from "blitz"
 import getUser from "app/users/queries/getUser"
 import Form from "app/components/Form"
 import updateUser from "app/users/mutations/updateUser"
+import { cardStyles } from "app/styles"
 
 const SettingsPage = () => {
+  const colorMode = useColorMode()
   const router = useRouter()
   const session = useSession()
   const [user] = useQuery(getUser, { where: { id: session.userId } }, { enabled: !!session.userId })
@@ -28,7 +39,7 @@ const SettingsPage = () => {
     <MainLayout headTitle="Settings">
       <Flex flexDir="column" maxW="containers.lg" mx="auto">
         <Heading my="4">Settings</Heading>
-        <Tabs w="100%">
+        <Tabs w="100%" {...cardStyles(colorMode)}>
           <TabList w="100%">
             <Tab w="50%">Profile</Tab>
             <Tab w="50%">Password</Tab>
