@@ -26,18 +26,28 @@ import {
   ModalBody,
   ModalCloseButton,
   useColorMode,
+  AlertDialog,
+  AlertDialogBody,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogContent,
+  AlertDialogOverlay,
 } from "@chakra-ui/core"
 import { cardStyles } from "app/styles"
 import MarkdownPreview from "app/components/MarkdownPreview"
 import Form from "app/components/Form"
 import createComment from "app/comments/mutations/createComment"
 import formatDate from "app/utils/formatDate"
+import deletePost from "app/posts/mutations/deletePost"
 
 type PageProps = {
   postData: PromiseReturnType<typeof getPost>
 }
 
 const PostPage = ({ postData }) => {
+  const [isModalOpen, setIsModalOpen] = React.useState(false)
+  const onModalClose = () => setIsModalOpen(false)
+  const cancelRef = React.useRef()
   const { colorMode } = useColorMode()
   const { isOpen, onOpen, onClose } = useDisclosure()
   const session = useSession()
@@ -76,9 +86,59 @@ const PostPage = ({ postData }) => {
           </Box>
 
           {session.userId === post.userId && (
-            <Button onClick={() => router.push("/posts/[id]/edit", `/posts/${params.id}/edit`)}>
-              Edit
-            </Button>
+            <Flex>
+              <Button
+                mr="4"
+                onClick={() => router.push("/posts/[id]/edit", `/posts/${params.id}/edit`)}
+              >
+                Edit Post
+              </Button>
+              <>
+                <Button bg="red.400" color="white" onClick={() => setIsModalOpen(true)}>
+                  Delete Post
+                </Button>
+
+                <AlertDialog
+                  isOpen={isModalOpen}
+                  leastDestructiveRef={cancelRef}
+                  onClose={onModalClose}
+                >
+                  <AlertDialogOverlay />
+                  <AlertDialogContent>
+                    <AlertDialogHeader fontSize="lg" fontWeight="bold">
+                      Delete Post
+                    </AlertDialogHeader>
+
+                    <AlertDialogBody>
+                      Are you sure? You can't undo this action afterwards.
+                    </AlertDialogBody>
+
+                    <AlertDialogFooter>
+                      <Button ref={cancelRef} onClick={onModalClose}>
+                        Cancel
+                      </Button>
+                      <Button
+                        bg="red.400"
+                        color="white"
+                        onClick={async () => {
+                          await deletePost({
+                            where: {
+                              id: post.id,
+                            },
+                          })
+
+                          onClose()
+                          router.back()
+                        }}
+                        ml={3}
+                      >
+                        Delete
+                      </Button>
+                    </AlertDialogFooter>
+                  </AlertDialogContent>
+                </AlertDialog>
+              </>
+            </Flex>
           )}
         </Flex>
         <MarkdownPreview content={post?.content || ""} />
@@ -171,7 +231,6 @@ export const getServerSideProps: GetServerSideProps<PageProps> = async ({ req, r
     getPost,
     {
       where: {
-        //@ts-ignore
         id: +params?.id,
       },
       include: {
