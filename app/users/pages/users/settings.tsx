@@ -53,6 +53,7 @@ const SettingsPage = () => {
                   defaultValues={{
                     name: user?.name,
                     email: user?.email,
+                    bio: user?.bio,
                   }}
                   fields={{
                     name: {
@@ -60,6 +61,12 @@ const SettingsPage = () => {
                       label: "Name",
                       type: "text",
                       validation: { required: true },
+                    },
+                    bio: {
+                      name: "bio",
+                      label: "Bio",
+                      type: "text",
+                      validation: { required: false },
                     },
                     email: {
                       name: "email",

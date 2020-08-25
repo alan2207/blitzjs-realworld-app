@@ -12,10 +12,20 @@ import {
   useToast,
 } from "@chakra-ui/core"
 import CreatableSelect from "react-select/creatable"
+import Select from "react-select"
 import MdEditor from "app/components/MDEditor"
 import MarkdownPreview from "./MarkdownPreview"
 type Field = {
-  type: "text" | "number" | "email" | "password" | "select" | "textarea" | "markdown" | "select"
+  type:
+    | "text"
+    | "number"
+    | "email"
+    | "password"
+    | "select"
+    | "simpleselect"
+    | "textarea"
+    | "markdown"
+    | "select"
   name: string
   label: string
   validation: ValidationRules
@@ -73,6 +83,7 @@ const Form = ({ fields, onSubmit, defaultValues }: Props) => {
         try {
           await onSubmit({ values, formControls, event })
         } catch (err) {
+          console.error(err)
           toast({
             title: "Error",
             description: err?.message,
@@ -144,6 +155,24 @@ const Form = ({ fields, onSubmit, defaultValues }: Props) => {
                 )}
                 name={k}
                 control={control}
+              />
+            )}
+            {v.type === "simpleselect" && (
+              <Controller
+                name={k}
+                control={control}
+                render={(props) => (
+                  <Box color="black">
+                    <Select
+                      {...props}
+                      getOptionValue={(i) => i.value}
+                      getOptionLabel={(i) => i.label}
+                      value={{ value: props.value, label: props.value }}
+                      onChange={(v) => setValue(k, v.value)}
+                      options={v.options}
+                    />
+                  </Box>
+                )}
               />
             )}
             <FormHelperText textTransform="capitalize" color="red.300">

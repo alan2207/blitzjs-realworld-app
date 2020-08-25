@@ -70,14 +70,22 @@ const MainLayout = ({ children, headTitle = "Real World App" }) => {
                     </MenuButton>
                     <MenuList color={colorMode === "light" ? "text-dark" : "text-light"}>
                       <MenuGroup>
-                        <MenuItem>
-                          <Link href="/users/[id]" as={`/users/${user.id}`}>
+                        <MenuItem py="4">
+                          <Link href="/users/[userId]" as={`/users/${user.id}`}>
                             <Flex flexDir="column">
                               <Box py="1">{user.name}</Box>
                               <Box fontWeight="600" py="1">
                                 {user.email}
                               </Box>
                             </Flex>
+                          </Link>
+                        </MenuItem>
+                        <MenuItem py="4">
+                          <Link href="/posts">
+                            <Box>
+                              <Icon mr="2" name="edit" />
+                              Posts
+                            </Box>
                           </Link>
                         </MenuItem>
                         <MenuItem py="4">

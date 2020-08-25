@@ -1,6 +1,6 @@
 import db, { FindManyPostArgs } from "db"
 
-type GetPostsInput = {
+type GetPostsInfiniteInput = {
   where?: FindManyPostArgs["where"]
   orderBy?: FindManyPostArgs["orderBy"]
   cursor?: FindManyPostArgs["cursor"]
@@ -10,11 +10,11 @@ type GetPostsInput = {
   include?: FindManyPostArgs["include"]
 }
 
-export default async function getPosts(
-  { where, orderBy, cursor, take, skip, include }: GetPostsInput,
+export default async function getPostsInfinite(
+  { where, orderBy, cursor, take, skip, include }: GetPostsInfiniteInput,
   ctx: Record<any, any> = {}
 ) {
-  const getPosts = await db.post.findMany({
+  const posts = await db.post.findMany({
     where,
     orderBy,
     cursor,
@@ -23,5 +23,9 @@ export default async function getPosts(
     include,
   })
 
-  return getPosts
+  const count = await db.post.count({ where })
+  const hasMore = skip! + take! < count
+  const nextPage = hasMore ? { take, skip: skip! + take! } : null
+
+  return { posts, nextPage }
 }

@@ -12,7 +12,7 @@ import {
   useColorMode,
 } from "@chakra-ui/core"
 import { useSession, useInfiniteQuery, useQuery, Link } from "blitz"
-import getPosts from "../queries/getPosts"
+import getPostsInfinite from "../queries/getPostsInfinite"
 import PostList from "../components/PostList"
 import getTags from "app/tags/queries/getTags"
 import { cardStyles } from "app/styles"
@@ -25,7 +25,7 @@ const Feed = ({ tagName = "" }) => {
   const [tagFilter, setTagFilter] = React.useState("")
 
   const [postGroups, { refetch, isFetchingMore, fetchMore, canFetchMore }] = useInfiniteQuery(
-    getPosts,
+    getPostsInfinite,
     {
       where: feedQuery,
       skip: 0,
@@ -38,6 +38,7 @@ const Feed = ({ tagName = "" }) => {
     },
     {
       getFetchMore: (lastGroup) => lastGroup.nextPage,
+      enabled: Object.keys(feedQuery).length > 0,
     }
   )
 
@@ -46,6 +47,7 @@ const Feed = ({ tagName = "" }) => {
   React.useEffect(() => {
     const tagQuery = tagName
       ? {
+          status: "published",
           tags: {
             some: {
               name: {
@@ -54,7 +56,7 @@ const Feed = ({ tagName = "" }) => {
             },
           },
         }
-      : {}
+      : { status: "published" }
     if (tabIndex === 0) {
       setFeedQuery({ ...tagQuery })
     } else if (tabIndex === 1 && session.userId) {
@@ -83,10 +85,10 @@ const Feed = ({ tagName = "" }) => {
             {session.userId && <Tab>Personal Feed</Tab>}
           </TabList>
 
-          {postGroups.map(({ posts }, i) => (
+          {postGroups?.map(({ posts }, i) => (
             <PostList key={i} refetch={refetch} posts={posts} />
           ))}
-          {postGroups.length > 0 && (
+          {postGroups?.length > 0 && (
             <Flex mt="4" justify="center" align="center">
               <Button
                 bg="bg-dark"

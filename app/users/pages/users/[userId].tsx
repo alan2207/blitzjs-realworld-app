@@ -14,6 +14,7 @@ import {
   Tab,
   TabPanel,
   useColorMode,
+  Text,
 } from "@chakra-ui/core"
 import updateUser from "app/users/mutations/updateUser"
 import PostList from "app/posts/components/PostList"
@@ -32,6 +33,9 @@ const ShowUserPage: BlitzPage = () => {
       followedBy: true,
       following: true,
       favorites: {
+        where: {
+          status: "published",
+        },
         include: {
           favoritedBy: true,
           User: true,
@@ -39,6 +43,9 @@ const ShowUserPage: BlitzPage = () => {
         },
       },
       posts: {
+        where: {
+          status: "published",
+        },
         include: {
           favoritedBy: true,
           User: true,
@@ -81,6 +88,9 @@ const ShowUserPage: BlitzPage = () => {
           <Box textAlign="center">
             <Avatar size="xl" />
             <Heading textAlign="center">{user.name}</Heading>
+            <Text maxW="containers.lg" my="4" fontSize="lg">
+              {user.bio}
+            </Text>
             {session?.userId === userId ? (
               <Button
                 onClick={() => router.push("/users/settings")}

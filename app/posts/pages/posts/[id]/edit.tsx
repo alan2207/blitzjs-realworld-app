@@ -97,11 +97,22 @@ const EditPostPage = () => {
                   isMulti: true,
                 },
               },
+              status: {
+                name: "status",
+                label: "Status",
+                type: "simpleselect",
+                validation: { required: true },
+                options: [
+                  { value: "draft", label: "draft" },
+                  { value: "published", label: "published" },
+                ],
+              },
             }}
             defaultValues={{
               title: post.title,
               intro: post.intro,
               content: post.content,
+              status: post.status,
               tags: post?.tags?.map((t) => ({ value: t.id, label: t.name })) || [],
             }}
           />
