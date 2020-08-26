@@ -17,7 +17,7 @@ import updateUser from "app/users/mutations/updateUser"
 import { cardStyles } from "app/styles"
 
 const SettingsPage = () => {
-  const colorMode = useColorMode()
+  const { colorMode } = useColorMode()
   const router = useRouter()
   const session = useSession()
   const [user] = useQuery(getUser, { where: { id: session.userId } }, { enabled: !!session.userId })

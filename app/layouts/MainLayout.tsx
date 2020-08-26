@@ -14,6 +14,7 @@ import {
   useColorMode,
   IconButton,
   Heading,
+  Link as ChakraLink,
 } from "@chakra-ui/core"
 import useAuthUser from "app/auth/hooks/useAuthUser"
 import logout from "app/auth/mutations/logout"
@@ -26,7 +27,7 @@ const MainLayout = ({ children, headTitle = "Real World App" }) => {
   return (
     <>
       <Head>
-        <title>{headTitle}</title>
+        <title>{headTitle} - Real World App</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Flex flexDir="column">
@@ -134,6 +135,26 @@ const MainLayout = ({ children, headTitle = "Real World App" }) => {
         >
           <Box h="100%" marginX="auto">
             {children}
+            <Box my="8" textAlign="center">
+              Made with{" "}
+              <ChakraLink
+                color="blue.500"
+                href="https://blitzjs.com"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Blitz.js
+              </ChakraLink>{" "}
+              by{" "}
+              <ChakraLink
+                color="blue.500"
+                href="https://github.com/alan2207"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                alan2207
+              </ChakraLink>
+            </Box>
           </Box>
         </Box>
       </Flex>

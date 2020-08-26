@@ -81,8 +81,12 @@ const PostPage = ({ postData }) => {
 
         <Flex justify="space-between" align="center" my="8">
           <Box>
-            <Text>Created By: {post.User?.name}</Text>
-            <Text>Date: {formatDate(post.createdAt)}</Text>
+            <Link href="/users/[userId]" as={`/users/${post.userId}`}>
+              {post.User?.name || "User"}
+            </Link>
+            <Text mb="2" color="gray.500" fontSize="xs">
+              {formatDate(post.createdAt)}
+            </Text>
           </Box>
 
           {session.userId === post.userId && (

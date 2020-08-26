@@ -3,7 +3,7 @@ import { Flex } from "@chakra-ui/core"
 import Feed from "app/posts/components/Feed"
 const Home = () => {
   return (
-    <MainLayout>
+    <MainLayout headTitle="Home">
       <Flex py="8" mx="auto" maxW="containers.lg">
         <Feed />
       </Flex>

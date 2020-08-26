@@ -38,6 +38,7 @@
     "date-fns": "2.15.0",
     "emotion-theming": "10.0.27",
     "lodash": "4.17.20",
+    "nprogress": "0.2.0",
     "react": "0.0.0-experimental-33c3af284",
     "react-dom": "0.0.0-experimental-33c3af284",
     "react-error-boundary": "2.3.1",

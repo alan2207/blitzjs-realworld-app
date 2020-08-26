@@ -113,7 +113,7 @@ const Feed = ({ tagName = "" }) => {
             {tags
               .filter((t) => t.name.includes(tagFilter))
               .map((tag) => (
-                <Box py="2">
+                <Box fontWeight={tagName === tag.name ? "600" : "300"} py="2">
                   <Link href="/tags/[tagName]" as={`/tags/${tag.name}`}>
                     {"#" + tag.name}
                   </Link>
