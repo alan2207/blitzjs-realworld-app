@@ -144,7 +144,7 @@ const Form = ({ fields, onSubmit, defaultValues }: Props) => {
                       isClearable={false}
                       getNewOptionData={(inputValue, optionLabel) => ({
                         label: inputValue,
-                        value: Date.now(),
+                        value: "" + Date.now(),
                         __isNew__: true,
                       })}
                       onChange={(v) => setValue(k, v)}

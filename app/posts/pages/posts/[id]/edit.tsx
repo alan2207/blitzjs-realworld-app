@@ -5,13 +5,13 @@ import MainLayout from "app/layouts/MainLayout"
 import FormLayout from "app/layouts/FormLayout"
 import Form from "app/components/Form"
 import { Flex } from "@chakra-ui/core"
-import differenceBy from "lodash/differenceBy"
 import updatePost from "app/posts/mutations/updatePost"
 import getPost from "app/posts/queries/getPost"
 import FullPageSpinner from "app/components/FullPageSpinner"
+import differenceWith from "lodash/differenceWith"
 
 const EditPostPage = () => {
-  const params = useParams("number")
+  const params = useParams("string")
   const session = useSession()
   const [post, { isFetching }] = useQuery(
     getPost,
@@ -45,8 +45,31 @@ const EditPostPage = () => {
         <FormLayout title="Edit Post">
           <Form
             onSubmit={async ({ values: { tags, ...values } }) => {
-              const removingTags = differenceBy(post?.tags, tags).map((t: any) => ({ id: t.id }))
-              const addingTags = differenceBy(tags, post?.tags)
+              const removingTags = differenceWith(post?.tags, tags, (x: any, y: any) => {
+                return x.name === y.label
+              }).map((t: any) => ({
+                id: t.id,
+              }))
+              const addingTags = differenceWith(tags, post?.tags, (x: any, y: any) => {
+                return x.label === y.name
+              })
+
+              const connectTags =
+                removingTags.length > 0
+                  ? {
+                      connectOrCreate: addingTags.map((t: any) => ({
+                        where: { id: t.value },
+                        create: { name: t.label },
+                      })),
+                    }
+                  : {}
+
+              const disconnectTags =
+                removingTags.length > 0
+                  ? {
+                      disconnect: removingTags,
+                    }
+                  : {}
 
               await updatePost({
                 where: {
@@ -59,8 +82,8 @@ const EditPostPage = () => {
                       where: { id: t.value },
                       create: { name: t.label },
                     })),
-
-                    disconnect: removingTags.length > 0 ? removingTags : undefined,
+                    ...connectTags,
+                    ...disconnectTags,
                   },
                 },
               })

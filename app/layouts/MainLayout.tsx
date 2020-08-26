@@ -134,7 +134,7 @@ const MainLayout = ({ children, headTitle = "Real World App" }) => {
           as="main"
         >
           <Box h="100%" marginX="auto">
-            {children}
+            <Box minH="600px">{children}</Box>
             <Box my="8" textAlign="center">
               Made with{" "}
               <ChakraLink
