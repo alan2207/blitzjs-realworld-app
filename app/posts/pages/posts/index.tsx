@@ -14,7 +14,7 @@ const PostsPage = () => {
     getPosts,
     {
       where: {
-        userId: +session?.userId,
+        userId: session?.userId,
         ...statusQuery,
       },
       include: {

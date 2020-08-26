@@ -24,7 +24,7 @@ const ShowUserPage: BlitzPage = () => {
   const { colorMode } = useColorMode()
   const router = useRouter()
   const session = useSession()
-  const userId = useParam("userId", "number")
+  const userId = useParam("userId", "string")
   const [user, { refetch }] = useQuery(getUser, {
     where: {
       id: userId,
@@ -67,7 +67,7 @@ const ShowUserPage: BlitzPage = () => {
         },
         data: {
           followedBy: {
-            [operation]: [{ id: +session?.userId }],
+            [operation]: [{ id: session?.userId }],
           },
         },
       })

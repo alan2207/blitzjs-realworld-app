@@ -52,7 +52,7 @@ const PostPage = ({ postData }) => {
   const { isOpen, onOpen, onClose } = useDisclosure()
   const session = useSession()
   const router = useRouter()
-  const params = useParams("number")
+  const params = useParams("string")
   const [post, { refetch }] = useQuery(
     getPost,
     {
@@ -235,7 +235,7 @@ export const getServerSideProps: GetServerSideProps<PageProps> = async ({ req, r
     getPost,
     {
       where: {
-        id: +params?.id,
+        id: params?.id,
       },
       include: {
         User: true,

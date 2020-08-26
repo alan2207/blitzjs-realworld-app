@@ -21,7 +21,7 @@ const Post = ({ post, refetch }) => {
         },
         data: {
           favoritedBy: {
-            [operation]: [{ id: +session?.userId }],
+            [operation]: [{ id: session?.userId }],
           },
         },
       })
