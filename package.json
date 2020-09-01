@@ -1,5 +1,5 @@
 {
-  "name": "blitzjs-realworld-example-app",
+  "name": "blitzjs-realworld-app",
   "version": "1.0.0",
   "scripts": {
     "start": "blitz start",
@@ -34,7 +34,7 @@
     "@emotion/styled": "10.0.27",
     "@prisma/cli": "2.4.1",
     "@prisma/client": "2.4.1",
-    "blitz": "0.17.0",
+    "blitz": "0.20.0",
     "date-fns": "2.15.0",
     "emotion-theming": "10.0.27",
     "lodash": "4.17.20",

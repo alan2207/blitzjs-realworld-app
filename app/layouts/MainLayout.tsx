@@ -1,5 +1,5 @@
 import React from "react"
-import { Head, Link, Router, useRouter } from "blitz"
+import { Head, Link, Router, useRouter, useSession } from "blitz"
 import {
   Flex,
   Box,
@@ -18,11 +18,17 @@ import {
 } from "@chakra-ui/core"
 import useAuthUser from "app/auth/hooks/useAuthUser"
 import logout from "app/auth/mutations/logout"
+import FullPageSpinner from "app/components/FullPageSpinner"
 
 const MainLayout = ({ children, headTitle = "Real World App" }) => {
+  const session = useSession()
   const [user] = useAuthUser()
   const router = useRouter()
   const { colorMode, toggleColorMode } = useColorMode()
+
+  if (session.isLoading) {
+    return <FullPageSpinner />
+  }
 
   return (
     <>
