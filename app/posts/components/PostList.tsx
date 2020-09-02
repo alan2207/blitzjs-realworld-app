@@ -56,7 +56,7 @@ const Post = ({ post, refetch }) => {
       </Text>
       <Flex my="1">
         {post.tags.map((t) => (
-          <Link key={t.name} href="/tags/[tagName]" as={`/tags/${t.name}`}>
+          <Link key={t.name} href="/posts/tags/[tagName]" as={`/posts/tags/${t.name}`}>
             <Button mr="2" size="sm">
               #{t.name}
             </Button>

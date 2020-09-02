@@ -6,15 +6,7 @@ dotenv.config()
 const db = new PrismaClient()
 
 async function main() {
-  ;[
-    { name: "Tech" },
-    { name: "Life" },
-    { name: "Sports" },
-    { name: "Entertainment" },
-    { name: "Health" },
-  ].forEach(async (t) => {
-    await db.tag.create({ data: t })
-  })
+  console.info("No data to seed.")
 }
 
 main()

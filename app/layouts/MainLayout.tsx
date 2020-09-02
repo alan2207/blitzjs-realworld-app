@@ -1,5 +1,5 @@
 import React from "react"
-import { Head, Link, Router, useRouter, useSession } from "blitz"
+import { Head, Link, useRouter, useSession } from "blitz"
 import {
   Flex,
   Box,
@@ -88,15 +88,15 @@ const MainLayout = ({ children, headTitle = "Real World App" }) => {
                           </Link>
                         </MenuItem>
                         <MenuItem py="4">
-                          <Link href="/posts">
+                          <Link href="/profile/my-posts">
                             <Box>
                               <Icon mr="2" name="edit" />
-                              Posts
+                              My Posts
                             </Box>
                           </Link>
                         </MenuItem>
                         <MenuItem py="4">
-                          <Link href="/users/settings">
+                          <Link href="/profile/settings">
                             <Box>
                               <Icon mr="2" name="settings" />
                               Settings
@@ -107,7 +107,7 @@ const MainLayout = ({ children, headTitle = "Real World App" }) => {
                           py="4"
                           onClick={async () => {
                             await logout()
-                            Router.replace("/login")
+                            router.replace("/login")
                           }}
                         >
                           <>

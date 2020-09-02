@@ -4,7 +4,7 @@
   "scripts": {
     "start": "blitz start",
     "studio": "blitz db studio",
-    "db:seed": "ts-node db/seeds.js",
+    "db:seed": "node db/seeds.js",
     "build": "NODE_ENV=production blitz db migrate && blitz build",
     "start:prod": "next start",
     "lint": "eslint --ignore-path .gitignore --ext .js,.ts,.tsx .",
@@ -34,7 +34,7 @@
     "@emotion/styled": "10.0.27",
     "@prisma/cli": "2.4.1",
     "@prisma/client": "2.4.1",
-    "blitz": "0.20.0",
+    "blitz": "0.21.0",
     "date-fns": "2.15.0",
     "emotion-theming": "10.0.27",
     "lodash": "4.17.20",

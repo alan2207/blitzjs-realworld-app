@@ -13,7 +13,7 @@ import MainLayout from "app/layouts/MainLayout"
 import { useSession, useQuery, useRouter } from "blitz"
 import getUser from "app/users/queries/getUser"
 import Form from "app/components/Form"
-import updateUser from "app/users/mutations/updateUser"
+import updateUser from "app/profile/mutations/updateUser"
 import { cardStyles } from "app/styles"
 
 const SettingsPage = () => {
@@ -25,12 +25,9 @@ const SettingsPage = () => {
   const onSubmit = async ({ values }) => {
     try {
       await updateUser({
-        where: {
-          id: session?.userId,
-        },
         data: values,
       })
-      router.push(`/users/${user.id}`)
+      router.push("/users/userId", `/users/${user.id}`)
     } catch (err) {
       console.log(err)
     }

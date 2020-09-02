@@ -16,7 +16,7 @@ import {
   useColorMode,
   Text,
 } from "@chakra-ui/core"
-import updateUser from "app/users/mutations/updateUser"
+import followOrUnfollowUser from "app/users/mutations/followOrUnfollowUser"
 import PostList from "app/posts/components/PostList"
 import UserList from "app/users/components/UserList"
 
@@ -61,16 +61,7 @@ const ShowUserPage: BlitzPage = () => {
     const operation = isAlreadyFollowing ? "disconnect" : "connect"
     if (!session.userId) return
     try {
-      await updateUser({
-        where: {
-          id: userId,
-        },
-        data: {
-          followedBy: {
-            [operation]: [{ id: session?.userId }],
-          },
-        },
-      })
+      await followOrUnfollowUser({ userId, operation })
       refetch()
     } catch (err) {
       console.log(err)
