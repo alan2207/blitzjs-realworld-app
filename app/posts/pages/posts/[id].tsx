@@ -25,7 +25,6 @@ import {
   ModalFooter,
   ModalBody,
   ModalCloseButton,
-  useColorMode,
   AlertDialog,
   AlertDialogBody,
   AlertDialogFooter,
@@ -33,7 +32,7 @@ import {
   AlertDialogContent,
   AlertDialogOverlay,
 } from "@chakra-ui/core"
-import { cardStyles } from "app/styles"
+import { useElementStyles } from "app/styles"
 import MarkdownPreview from "app/components/MarkdownPreview"
 import Form from "app/components/Form"
 import createComment from "app/comments/mutations/createComment"
@@ -48,7 +47,8 @@ const PostPage = ({ postData }) => {
   const [isModalOpen, setIsModalOpen] = React.useState(false)
   const onModalClose = () => setIsModalOpen(false)
   const cancelRef = React.useRef()
-  const { colorMode } = useColorMode()
+  const { cardStyles } = useElementStyles()
+
   const { isOpen, onOpen, onClose } = useDisclosure()
   const session = useSession()
   const router = useRouter()
@@ -76,7 +76,7 @@ const PostPage = ({ postData }) => {
 
   return (
     <MainLayout headTitle={post.title}>
-      <Box {...cardStyles(colorMode)} maxW="containers.lg" mx="auto" my="4" p="8">
+      <Box {...cardStyles} maxW="containers.lg" mx="auto" my="4" p="8">
         <Heading textAlign="center">{post.title}</Heading>
 
         <Flex justify="space-between" align="center" my="8">
@@ -157,7 +157,7 @@ const PostPage = ({ postData }) => {
         </Flex>
       </Box>
 
-      <Box {...cardStyles(colorMode)} maxW="containers.lg" mx="auto" my="4" p="8">
+      <Box {...cardStyles} maxW="containers.lg" mx="auto" my="4" p="8">
         <Heading>Comments</Heading>
         {session.userId && (
           <Button my="4" bg="bg-dark" color="text-light" onClick={onOpen}>
@@ -213,7 +213,7 @@ const PostPage = ({ postData }) => {
         </Modal>
 
         {post.comments.map((c) => (
-          <Box key={c.id} {...cardStyles(colorMode)} my="4">
+          <Box key={c.id} {...cardStyles} my="4">
             <Box>
               <Link href={`/users/${c.user.id}`}>{c.user.name || ""}</Link>
               <Text mb="2" color="gray.500" fontSize="xs">

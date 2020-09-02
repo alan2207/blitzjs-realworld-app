@@ -1,11 +1,11 @@
 import React from "react"
-import { Box, Heading, useColorMode } from "@chakra-ui/core"
-import { cardStyles } from "app/styles"
+import { Box, Heading } from "@chakra-ui/core"
+import { useElementStyles } from "app/styles"
 
 const FormLayout = ({ children, title }) => {
-  const { colorMode } = useColorMode()
+  const { cardStyles } = useElementStyles()
   return (
-    <Box {...cardStyles(colorMode)} w="100%" mx="auto" maxW="containers.lg">
+    <Box {...cardStyles} w="100%" mx="auto" maxW="containers.lg">
       <Heading textAlign="center" mb="4">
         {title}
       </Heading>

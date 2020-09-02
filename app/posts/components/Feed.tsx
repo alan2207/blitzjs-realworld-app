@@ -1,24 +1,13 @@
 import React from "react"
-import {
-  Box,
-  Flex,
-  Stack,
-  Tabs,
-  TabList,
-  Tab,
-  Button,
-  Heading,
-  Input,
-  useColorMode,
-} from "@chakra-ui/core"
+import { Box, Flex, Stack, Tabs, TabList, Tab, Button, Heading, Input } from "@chakra-ui/core"
 import { useSession, useInfiniteQuery, useQuery, Link } from "blitz"
 import getPostsInfinite from "../queries/getPostsInfinite"
 import PostList from "../components/PostList"
 import getTags from "app/tags/queries/getTags"
-import { cardStyles } from "app/styles"
+import { useElementStyles } from "app/styles"
 
 const Feed = ({ tagName = "" }) => {
-  const { colorMode } = useColorMode()
+  const { cardStyles } = useElementStyles()
   const session = useSession()
   const [feedQuery, setFeedQuery] = React.useState({})
   const [tabIndex, setTabIndex] = React.useState(0)
@@ -104,7 +93,7 @@ const Feed = ({ tagName = "" }) => {
         </Tabs>
       </Box>
       <Box mt="16" display={["none", "none", "block"]} w="20%">
-        <Box {...{ ...cardStyles(colorMode), p: 3 }}>
+        <Box {...{ ...cardStyles, p: 3 }}>
           <Heading py="2" borderBottom="1px solid black" mb="4" size="md">
             Tags:
           </Heading>
