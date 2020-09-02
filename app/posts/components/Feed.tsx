@@ -5,6 +5,7 @@ import getPostsInfinite from "../queries/getPostsInfinite"
 import PostList from "../components/PostList"
 import getTags from "app/tags/queries/getTags"
 import { useElementStyles } from "app/styles"
+import useIntersectionObserver from "app/hooks/useIntersectionObserver"
 
 const Feed = ({ tagName = "" }) => {
   const { cardStyles } = useElementStyles()
@@ -64,6 +65,15 @@ const Feed = ({ tagName = "" }) => {
     }
   }, [tabIndex, session.userId, tagName])
 
+  const loadMoreButtonRef = React.useRef()
+
+  useIntersectionObserver({
+    root: null,
+    target: loadMoreButtonRef,
+    onIntersect: fetchMore,
+    enabled: canFetchMore,
+  })
+
   return (
     <Stack isInline spacing={[0, 0, 8]} w="100%">
       <Box w={["100%", "100%", "80%"]}>
@@ -80,6 +90,7 @@ const Feed = ({ tagName = "" }) => {
           {postGroups?.length > 0 && (
             <Flex mt="4" justify="center" align="center">
               <Button
+                ref={loadMoreButtonRef}
                 bg="bg-dark"
                 color="text-light"
                 isLoading={!!isFetchingMore}
