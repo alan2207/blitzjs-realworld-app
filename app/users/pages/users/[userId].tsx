@@ -84,7 +84,7 @@ const ShowUserPage: BlitzPage = () => {
             </Text>
             {session?.userId === userId ? (
               <Button
-                onClick={() => router.push("/users/settings")}
+                onClick={() => router.push("/profile/settings")}
                 my="4"
                 variant="outline"
                 variantColor="primary"
