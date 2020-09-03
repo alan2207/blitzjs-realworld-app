@@ -192,7 +192,7 @@ const Form = ({ fields, onSubmit, defaultValues }: Props) => {
       >
         Submit
       </Button>
-      <DevTool control={control} />
+      {process.env.NODE_ENV === "development" && <DevTool control={control} />}
     </Box>
   )
 }

@@ -4,6 +4,8 @@
 
 Content sharing fullstack app built with [Blitz.js](https://github.com/blitz-js/blitz)
 
+### [Demo](https://blitzjs-realworld-app.vercel.app/)
+
 ### Inspiration:
 
 The app is built as a part of exploring [Blitz.js](https://github.com/blitz-js/blitz) and is heavely inspired by [gothinkster's realworld app](https://github.com/gothinkster/realworld) and Dev.to platform.
