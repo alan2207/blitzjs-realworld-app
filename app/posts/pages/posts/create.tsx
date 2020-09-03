@@ -34,7 +34,7 @@ const CreatePostPage = () => {
                   },
                 },
               })
-              Router.push("/")
+              Router.push("/profile/my-posts")
             }}
             fields={{
               title: {
