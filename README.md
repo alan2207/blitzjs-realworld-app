@@ -45,7 +45,6 @@ The app is built as a part of exploring [Blitz.js](https://github.com/blitz-js/b
 
 - Support recursive comments (reply on individual comment)
 - Comment Likes
-- Cascade deletes in prisma
 - Change user password
 
 ## Getting Started
