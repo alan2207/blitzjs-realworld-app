@@ -1,17 +1,17 @@
 // This is your Prisma schema file,
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
-datasource sqlite {
-  provider = "sqlite"
-  url = "***"
-}
+// datasource sqlite {
+//   provider = "sqlite"
+//   url = "***"
+// }
 
 // SQLite is easy to start with, but if you use Postgres in production
 // you should also use it in development with the following:
-//datasource postgresql {
-//  provider = "postgresql"
-//  url = "***"
-//}
+datasource postgresql {
+  provider = "postgresql"
+  url = "***"
+}
 
 generator client {
   provider        = "prisma-client-js"
@@ -20,8 +20,13 @@ generator client {
 
 // --------------------------------------
 
+enum PostStatus {
+  draft
+  published
+}
+
 model User {
-  id             Int       @default(autoincrement()) @id
+  id             String    @id @default(uuid())
   createdAt      DateTime  @default(now())
   updatedAt      DateTime  @updatedAt
   name           String?
@@ -38,13 +43,13 @@ model User {
 }
 
 model Session {
-  id                 Int       @default(autoincrement()) @id
+  id                 String    @id @default(uuid())
   createdAt          DateTime  @default(now())
   updatedAt          DateTime  @updatedAt
   expiresAt          DateTime?
   handle             String    @unique
   user               User?     @relation(fields: [userId], references: [id])
-  userId             Int?
+  userId             String?
   hashedSessionToken String?
   antiCSRFToken      String?
   publicData         String?
@@ -52,33 +57,33 @@ model Session {
 }
 
 model Post {
-  id          Int       @default(autoincrement()) @id
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
+  id          String     @id @default(uuid())
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
   title       String
   intro       String
   content     String
-  tags        Tag[]     @relation(references: [id])
-  User        User?     @relation(fields: [userId], references: [id])
-  userId      Int?
-  favoritedBy User[]    @relation("Favorites", references: [id])
+  tags        Tag[]      @relation(references: [id])
+  User        User?      @relation(fields: [userId], references: [id])
+  userId      String?
+  favoritedBy User[]     @relation("Favorites", references: [id])
   comments    Comment[]
-  status      String    @default("draft")
+  status      PostStatus @default(draft)
 }
 
 model Comment {
-  id        Int      @default(autoincrement()) @id
+  id        String   @id @default(uuid())
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   content   String
   user      User?    @relation(fields: [userId], references: [id])
-  userId    Int?
+  userId    String?
   post      Post?    @relation(fields: [postId], references: [id])
-  postId    Int?
+  postId    String?
 }
 
 model Tag {
-  id        Int      @default(autoincrement()) @id
+  id        String   @id @default(uuid())
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   name      String   @unique

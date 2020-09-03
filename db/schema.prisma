@@ -1,17 +1,17 @@
 // This is your Prisma schema file,
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
-datasource sqlite {
-  provider = "sqlite"
-  url      = "file:./db.sqlite"
-}
+// datasource sqlite {
+//   provider = "sqlite"
+//   url      = "file:./db.sqlite"
+// }
 
 // SQLite is easy to start with, but if you use Postgres in production
 // you should also use it in development with the following:
-//datasource postgresql {
-//  provider = "postgresql"
-//  url      = env("DATABASE_URL")
-//}
+datasource postgresql {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
 
 generator client {
   provider        = "prisma-client-js"
@@ -19,6 +19,11 @@ generator client {
 }
 
 // --------------------------------------
+
+enum PostStatus {
+  draft
+  published
+}
 
 model User {
   id             String    @id @default(uuid())
@@ -52,18 +57,18 @@ model Session {
 }
 
 model Post {
-  id          String    @id @default(uuid())
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
+  id          String     @id @default(uuid())
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
   title       String
   intro       String
   content     String
-  tags        Tag[]     @relation(references: [id])
-  User        User?     @relation(fields: [userId], references: [id])
+  tags        Tag[]      @relation(references: [id])
+  User        User?      @relation(fields: [userId], references: [id])
   userId      String?
-  favoritedBy User[]    @relation("Favorites", references: [id])
+  favoritedBy User[]     @relation("Favorites", references: [id])
   comments    Comment[]
-  status      String    @default("draft")
+  status      PostStatus @default(draft)
 }
 
 model Comment {
