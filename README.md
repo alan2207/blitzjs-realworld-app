@@ -4,9 +4,7 @@
 
 Content sharing app built with [Blitz.js](https://github.com/blitz-js/blitz)
 
-### [Demo](https://blitzjs-realworld-app.vercel.app/)
-
-Note: You might get `Error in connector: Error querying the database: db error: FATAL: too many connections for role` error while using the demo app. This happens because it uses the free tier postgresql database on [Heroku](https://heroku.com) which does not support connection pooling and since the generated API's are serverless functions that run on [Vercel](https://vercel.com) and each function is being executed in a separate process, the db runs out of the available connections very quickly.
+### [Demo](https://blitzjs-realworld-app.herokuapp.com/)
 
 ### Inspiration:
 
