@@ -1,1 +1,1 @@
-web: npm run start:prod
+web: npx next start -p $PORT
