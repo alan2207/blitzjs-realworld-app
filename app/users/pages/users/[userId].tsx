@@ -38,7 +38,7 @@ const ShowUserPage: BlitzPage = () => {
         },
         include: {
           favoritedBy: true,
-          User: true,
+          user: true,
           tags: true,
         },
       },
@@ -48,7 +48,7 @@ const ShowUserPage: BlitzPage = () => {
         },
         include: {
           favoritedBy: true,
-          User: true,
+          user: true,
           tags: true,
         },
       },

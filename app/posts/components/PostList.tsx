@@ -41,7 +41,7 @@ const Post = ({ post, refetch }) => {
   return (
     <Flex flexDir="column" {...cardStyles} my="2">
       <Link href="/users/[userId]" as={`/users/${post.userId}`}>
-        {post.User?.name || "User"}
+        {post.user?.name || "User"}
       </Link>
       <Text mb="2" color="gray.500" fontSize="xs">
         {formatDate(post.createdAt)}

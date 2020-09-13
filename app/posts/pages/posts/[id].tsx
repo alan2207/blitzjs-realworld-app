@@ -60,7 +60,7 @@ const PostPage = ({ postData }) => {
         id: params?.id,
       },
       include: {
-        User: true,
+        user: true,
         comments: {
           include: {
             user: true,
@@ -82,7 +82,7 @@ const PostPage = ({ postData }) => {
         <Flex justify="space-between" align="center" my="8">
           <Box>
             <Link href="/users/[userId]" as={`/users/${post.userId}`}>
-              {post.User?.name || "User"}
+              {post.user?.name || "User"}
             </Link>
             <Text mb="2" color="gray.500" fontSize="xs">
               {formatDate(post.createdAt)}
@@ -238,7 +238,7 @@ export const getServerSideProps: GetServerSideProps<PageProps> = async ({ req, r
         id: params?.id,
       },
       include: {
-        User: true,
+        user: true,
         comments: {
           include: {
             user: true,

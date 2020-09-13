@@ -21,7 +21,7 @@ const Feed = ({ tagName = "" }) => {
       skip: 0,
       take: 5,
       include: {
-        User: true,
+        user: true,
         favoritedBy: true,
         tags: true,
       },
@@ -51,7 +51,7 @@ const Feed = ({ tagName = "" }) => {
       setFeedQuery({ ...tagQuery })
     } else if (tabIndex === 1 && session.userId) {
       setFeedQuery({
-        User: {
+        user: {
           followedBy: {
             some: {
               id: {

@@ -5,7 +5,7 @@ type DeletePostInput = {
 }
 
 export default async function deletePost({ where }: DeletePostInput, ctx: Record<any, any> = {}) {
-  ctx.session?.authorize(["admin", "user"])
+  ctx.session!.authorize(["admin", "user"])
 
   await db.comment.deleteMany({
     where: {

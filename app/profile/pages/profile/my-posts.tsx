@@ -23,7 +23,7 @@ const PostsPage = () => {
       skip: ITEMS_PER_PAGE * page,
       take: ITEMS_PER_PAGE,
       include: {
-        User: true,
+        user: true,
         favoritedBy: true,
         tags: true,
       },

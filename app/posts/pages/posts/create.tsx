@@ -27,7 +27,7 @@ const CreatePostPage = () => {
                       create: { name: t.label.toLowerCase() },
                     })),
                   },
-                  User: {
+                  user: {
                     connect: {
                       id: authUser?.id,
                     },
