@@ -25,6 +25,7 @@ const Feed = ({ tagName = "" }) => {
         favoritedBy: true,
         tags: true,
       },
+      orderBy: [{ createdAt: "desc" }],
     },
     {
       getFetchMore: (lastGroup) => lastGroup.nextPage,

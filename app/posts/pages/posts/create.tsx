@@ -67,12 +67,23 @@ const CreatePostPage = () => {
                   isMulti: true,
                 },
               },
+              status: {
+                name: "status",
+                label: "Status",
+                type: "simpleselect",
+                validation: { required: true },
+                options: [
+                  { value: "draft", label: "draft" },
+                  { value: "published", label: "published" },
+                ],
+              },
             }}
             defaultValues={{
               title: "",
               intro: "",
               content: "",
               tags: [],
+              status: "draft",
             }}
           />
         </FormLayout>

@@ -1,6 +1,5 @@
 import React from "react"
 import { useForm, ValidationRules, Controller } from "react-hook-form"
-import { DevTool } from "@hookform/devtools"
 import {
   Box,
   Input,
@@ -192,7 +191,6 @@ const Form = ({ fields, onSubmit, defaultValues }: Props) => {
       >
         Submit
       </Button>
-      {process.env.NODE_ENV === "development" && <DevTool control={control} />}
     </Box>
   )
 }
