@@ -11,7 +11,7 @@ import React from "react"
 
 const TopProgressBar = dynamic(
   () => {
-    return import("app/components/TopProgessBar")
+    return import("app/components/TopProgressBar")
   },
   { ssr: false }
 )
